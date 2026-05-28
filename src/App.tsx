@@ -666,6 +666,7 @@ function ReviewPage({ words, onDetail, onReview }: { words: NormalizedWord[]; on
       {selected && (
         <div className="review-overlay" onClick={() => setSelected(null)}>
           <div className="review-sheet" onClick={(e) => e.stopPropagation()}>
+            <button className="review-close" onClick={() => setSelected(null)}>✕</button>
             <div className="review-handle" />
             <h2>{selected.word}</h2>
             <Phonetics word={selected} />
