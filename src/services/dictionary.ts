@@ -123,8 +123,8 @@ export async function fetchOnlineDictionary(word: string): Promise<NormalizedWor
     word: key,
     meanings,
     examples: [{ en: EMPTY_EXAMPLE, zh: EMPTY_TRANSLATION, source: "none" as const }],
-    phoneticUK: bingData?.phoneticUK || "",
-    phoneticUS: bingData?.phoneticUS || "",
+    phoneticUK: bingData?.phoneticUK || local?.phoneticUK || "",
+    phoneticUS: bingData?.phoneticUS || local?.phoneticUS || "",
     source: local ? "local" : "online",
     isCET4: Boolean(local),
   });

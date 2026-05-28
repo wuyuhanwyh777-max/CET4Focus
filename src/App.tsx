@@ -719,7 +719,7 @@ function CompactCard({ word, favorite, onToggle, onDetail }: {
         <DotTags word={word} />
       </div>
       <p className="compact-meaning">{word.meanings[0]?.definitionZh || ""}</p>
-      {word.phoneticUS && <span className="compact-phonetic">美/{word.phoneticUS}/</span>}
+      {(word.phoneticUK || word.phoneticUS) && <span className="compact-phonetic">/{word.phoneticUK || word.phoneticUS}/</span>}
       <button className="compact-fav" onClick={(e) => { e.stopPropagation(); onToggle(word); }}>
         {favorite ? "★" : "☆"}
       </button>
@@ -764,7 +764,7 @@ function useLazyGroups(groups: [string, NormalizedWord[]][], batchSize = 2) {
 
   const shown = groups.slice(0, visible);
   const remaining = groups.length - visible;
-  return { shown, remaining, sentinelRef };
+  return { shown, remaining, sentinelRef, setVisible };
 }
 
 function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<string, NormalizedWord>; onToggle: (word: NormalizedWord) => void; onDetail: (word: NormalizedWord) => void }) {
@@ -781,17 +781,19 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
     return true;
   }), [allWords, query, filter, favorites]);
   const groups = useAlphabetGroups(filtered);
-  const { shown, remaining, sentinelRef } = useLazyGroups(groups);
+  const { shown, remaining, sentinelRef, setVisible } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
 
   const [pickOpen, setPickOpen] = useState(false);
 
   function scrollTo(letter: string) {
+    const idx = groups.findIndex(([l]) => l === letter);
+    if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
     setPickOpen(false);
     setTimeout(() => {
       const el = document.getElementById(`lib-${letter}`);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 200);
+    }, 250);
   }
 
   return (
@@ -862,17 +864,19 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
     return true;
   }), [words, query, filter]);
   const groups = useAlphabetGroups(filtered);
-  const { shown, remaining, sentinelRef } = useLazyGroups(groups);
+  const { shown, remaining, sentinelRef, setVisible } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
 
   const [pickOpen, setPickOpen] = useState(false);
 
   function scrollTo(letter: string) {
+    const idx = groups.findIndex(([l]) => l === letter);
+    if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
     setPickOpen(false);
     setTimeout(() => {
       const el = document.getElementById(`fav-${letter}`);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 200);
+    }, 250);
   }
 
   return (
