@@ -1,0 +1,54 @@
+functionsDirectory = "D:\\CET4FocusV2\\netlify\\functions"
+functionsDirectoryOrigin = "default"
+redirectsOrigin = "config"
+plugins = []
+headers = []
+
+[build]
+publish = "D:\\CET4FocusV2\\dist"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "npm run build"
+functions = "D:\\CET4FocusV2\\netlify\\functions"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[functions]
+
+[functions."*"]
+
+[[redirects]]
+from = "/api/youdao/*"
+to = "https://dict.youdao.com/:splat"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/bing/*"
+to = "https://cn.bing.com/:splat"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/api/youdao/*"
+  to = "https://dict.youdao.com/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/bing/*"
+  to = "https://cn.bing.com/:splat"
+  status = 200
