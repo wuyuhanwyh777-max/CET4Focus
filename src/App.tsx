@@ -822,12 +822,22 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
         </div>
       </div>
       {pickerOpen && (
-        <div className="picker-overlay" onClick={() => setPickerOpen(false)}>
-          <div className="picker-modal" onClick={(e) => e.stopPropagation()}>
-            <p className="picker-title">跳转到</p>
-            <div className="picker-grid">
-              {letters.map((l, i) => (
-                <button key={l} className="picker-cell" style={{ animationDelay: `${i * 0.015}s` }} onClick={() => scrollTo(l)}>{l}</button>
+        <div onClick={() => setPickerOpen(false)}
+          style={{position:"fixed",inset:0,zIndex:9999,background:"rgba(0,0,0,0.35)",
+            display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+          <div onClick={e => e.stopPropagation()}
+            style={{background:"#fff",borderRadius:24,padding:24,width:"100%",maxWidth:400,
+              position:"relative",boxShadow:"0 20px 60px rgba(0,0,0,0.15)"}}>
+            <button onClick={() => setPickerOpen(false)}
+              style={{position:"absolute",top:12,right:12,width:32,height:32,borderRadius:"50%",
+                border:0,background:"rgba(0,0,0,0.06)",fontSize:18,cursor:"pointer",
+                display:"flex",alignItems:"center",justifyContent:"center",color:"#666"}}>✕</button>
+            <p style={{textAlign:"center",fontWeight:700,color:"#6b7280",marginBottom:14,fontSize:14}}>跳转到</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(6,1fr)",gap:8}}>
+              {letters.map(l => (
+                <button key={l} onClick={() => scrollTo(l)}
+                  style={{aspectRatio:"1",borderRadius:14,border:0,fontSize:16,fontWeight:700,
+                    color:"#111827",background:"rgba(245,247,251,0.9)",cursor:"pointer"}}>{l}</button>
               ))}
             </div>
           </div>
@@ -890,12 +900,22 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
         </div>
       </div>
       {pickerOpen && letters.length > 0 && (
-        <div className="picker-overlay" onClick={() => setPickerOpen(false)}>
-          <div className="picker-modal" onClick={(e) => e.stopPropagation()}>
-            <p className="picker-title">跳转到</p>
-            <div className="picker-grid">
-              {letters.map((l, i) => (
-                <button key={l} className="picker-cell" style={{ animationDelay: `${i * 0.015}s` }} onClick={() => scrollTo(l)}>{l}</button>
+        <div onClick={() => setPickerOpen(false)}
+          style={{position:"fixed",inset:0,zIndex:9999,background:"rgba(0,0,0,0.35)",
+            display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+          <div onClick={e => e.stopPropagation()}
+            style={{background:"#fff",borderRadius:24,padding:24,width:"100%",maxWidth:400,
+              position:"relative",boxShadow:"0 20px 60px rgba(0,0,0,0.15)"}}>
+            <button onClick={() => setPickerOpen(false)}
+              style={{position:"absolute",top:12,right:12,width:32,height:32,borderRadius:"50%",
+                border:0,background:"rgba(0,0,0,0.06)",fontSize:18,cursor:"pointer",
+                display:"flex",alignItems:"center",justifyContent:"center",color:"#666"}}>✕</button>
+            <p style={{textAlign:"center",fontWeight:700,color:"#6b7280",marginBottom:14,fontSize:14}}>跳转到</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(6,1fr)",gap:8}}>
+              {letters.map(l => (
+                <button key={l} onClick={() => scrollTo(l)}
+                  style={{aspectRatio:"1",borderRadius:14,border:0,fontSize:16,fontWeight:700,
+                    color:"#111827",background:"rgba(245,247,251,0.9)",cursor:"pointer"}}>{l}</button>
               ))}
             </div>
           </div>
