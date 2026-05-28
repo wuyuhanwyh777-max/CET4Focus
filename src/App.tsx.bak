@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { createPortal } from "react-dom";
 import {
   BarChart3,
   BookOpen,
@@ -31,8 +30,6 @@ import {
   setScrollPosition,
 } from "./utils/storage";
 import { EMPTY_EXAMPLE, EMPTY_TRANSLATION, normalizeWordData, withReviewDefaults } from "./utils/normalize";
-
-const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 const tabs: Array<{ page: Page; label: string; icon: ReactNode }> = [
   { page: "dashboard", label: "首页", icon: <Home size={19} /> },
@@ -712,51 +709,6 @@ function DotTags({ word }: { word: NormalizedWord }) {
   );
 }
 
-
-function AlphabetPicker({
-  open,
-  availableLetters,
-  onSelect,
-  onClose,
-}: {
-  open: boolean;
-  availableLetters: string[];
-  onSelect: (letter: string) => void;
-  onClose: () => void;
-}) {
-  if (!open) return null;
-  const available = new Set(availableLetters);
-
-  return createPortal(
-    <div className="alphabet-picker-overlay" onClick={onClose} role="dialog" aria-modal="true">
-      <div className="alphabet-picker-panel" onClick={(event) => event.stopPropagation()}>
-        <button className="alphabet-picker-close" onClick={onClose} aria-label="关闭首字母选择器">
-          ×
-        </button>
-        <h2 className="alphabet-picker-title">选择首字母</h2>
-        <p className="alphabet-picker-tip">点击字母后会跳转到对应分组</p>
-        <div className="alphabet-picker-grid">
-          {ALPHABET.map((letter) => {
-            const disabled = !available.has(letter);
-            return (
-              <button
-                key={letter}
-                className="alphabet-picker-cell"
-                disabled={disabled}
-                onClick={() => !disabled && onSelect(letter)}
-                aria-label={`跳转到 ${letter} 分组`}
-              >
-                {letter}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    </div>,
-    document.body,
-  );
-}
-
 function CompactCard({ word, favorite, onToggle, onDetail }: {
   word: NormalizedWord; favorite: boolean; onToggle: (word: NormalizedWord) => void; onDetail: (word: NormalizedWord) => void;
 }) {
@@ -834,16 +786,12 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
 
   const [pickerOpen, setPickerOpen] = useState(false);
 
-  function openAlphabetPicker() {
-    setPickerOpen(true);
-  }
-
   function scrollTo(letter: string) {
     const idx = groups.findIndex(([l]) => l === letter);
     if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
     setPickerOpen(false);
     setTimeout(() => {
-      const el = document.getElementById(`lib-section-${letter}`);
+      const el = document.getElementById(`lib-${letter}`);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 150);
   }
@@ -861,10 +809,8 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
       <div className="lib-body">
         <div className="lib-groups">
           {shown.map(([letter, words]) => (
-            <div key={letter} id={`lib-section-${letter}`} className="lib-group">
-              <button type="button" className="lib-header" onClick={openAlphabetPicker} aria-label={`打开首字母选择器，当前分组 ${letter}`}>
-                <span className="lib-letter">{letter}</span><span>{words.length}词</span>
-              </button>
+            <div key={letter} id={`lib-${letter}`} className="lib-group">
+              <button className="lib-header" onClick={() => setPickerOpen(true)}>{letter}<span>{words.length}词</span></button>
               <div className="compact-grid">
                 {words.map((word) => <CompactCard key={word.word} word={word} favorite={Boolean(favorites[word.word])} onToggle={onToggle} onDetail={onDetail} />)}
               </div>
@@ -875,12 +821,28 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
           {groups.length === 0 && query && <div className="empty">没有匹配的单词</div>}
         </div>
       </div>
-      <AlphabetPicker
-        open={pickerOpen}
-        availableLetters={letters}
-        onSelect={scrollTo}
-        onClose={() => setPickerOpen(false)}
-      />
+      {pickerOpen && (
+        <div onClick={() => setPickerOpen(false)}
+          style={{position:"fixed",inset:0,zIndex:9999,background:"rgba(0,0,0,0.35)",
+            display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+          <div onClick={e => e.stopPropagation()}
+            style={{background:"#fff",borderRadius:24,padding:24,width:"100%",maxWidth:400,
+              position:"relative",boxShadow:"0 20px 60px rgba(0,0,0,0.15)"}}>
+            <button onClick={() => setPickerOpen(false)}
+              style={{position:"absolute",top:12,right:12,width:32,height:32,borderRadius:"50%",
+                border:0,background:"rgba(0,0,0,0.06)",fontSize:18,cursor:"pointer",
+                display:"flex",alignItems:"center",justifyContent:"center",color:"#666"}}>✕</button>
+            <p style={{textAlign:"center",fontWeight:700,color:"#6b7280",marginBottom:14,fontSize:14}}>跳转到</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(6,1fr)",gap:8}}>
+              {letters.map(l => (
+                <button key={l} onClick={() => scrollTo(l)}
+                  style={{aspectRatio:"1",borderRadius:14,border:0,fontSize:16,fontWeight:700,
+                    color:"#111827",background:"rgba(245,247,251,0.9)",cursor:"pointer"}}>{l}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -903,16 +865,12 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
 
   const [pickerOpen, setPickerOpen] = useState(false);
 
-  function openAlphabetPicker() {
-    setPickerOpen(true);
-  }
-
   function scrollTo(letter: string) {
     const idx = groups.findIndex(([l]) => l === letter);
     if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
     setPickerOpen(false);
     setTimeout(() => {
-      const el = document.getElementById(`fav-section-${letter}`);
+      const el = document.getElementById(`fav-${letter}`);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 150);
   }
@@ -930,10 +888,8 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
       <div className="lib-body">
         <div className="lib-groups">
           {shown.map(([letter, words]) => (
-            <div key={letter} id={`fav-section-${letter}`} className="lib-group">
-              <button type="button" className="lib-header" onClick={openAlphabetPicker} aria-label={`打开首字母选择器，当前分组 ${letter}`}>
-                <span className="lib-letter">{letter}</span><span>{words.length}词</span>
-              </button>
+            <div key={letter} id={`fav-${letter}`} className="lib-group">
+              <button className="lib-header" onClick={() => setPickerOpen(true)}>{letter}<span>{words.length}词</span></button>
               <div className="compact-grid">
                 {words.map((word) => <CompactCard key={word.word} word={word} favorite={true} onToggle={onToggle} onDetail={onDetail} />)}
               </div>
@@ -943,12 +899,28 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
           {groups.length === 0 && <div className="empty">还没有收藏单词，去查询或学习时加入生词本吧。</div>}
         </div>
       </div>
-      <AlphabetPicker
-        open={pickerOpen}
-        availableLetters={letters}
-        onSelect={scrollTo}
-        onClose={() => setPickerOpen(false)}
-      />
+      {pickerOpen && letters.length > 0 && (
+        <div onClick={() => setPickerOpen(false)}
+          style={{position:"fixed",inset:0,zIndex:9999,background:"rgba(0,0,0,0.35)",
+            display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+          <div onClick={e => e.stopPropagation()}
+            style={{background:"#fff",borderRadius:24,padding:24,width:"100%",maxWidth:400,
+              position:"relative",boxShadow:"0 20px 60px rgba(0,0,0,0.15)"}}>
+            <button onClick={() => setPickerOpen(false)}
+              style={{position:"absolute",top:12,right:12,width:32,height:32,borderRadius:"50%",
+                border:0,background:"rgba(0,0,0,0.06)",fontSize:18,cursor:"pointer",
+                display:"flex",alignItems:"center",justifyContent:"center",color:"#666"}}>✕</button>
+            <p style={{textAlign:"center",fontWeight:700,color:"#6b7280",marginBottom:14,fontSize:14}}>跳转到</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(6,1fr)",gap:8}}>
+              {letters.map(l => (
+                <button key={l} onClick={() => scrollTo(l)}
+                  style={{aspectRatio:"1",borderRadius:14,border:0,fontSize:16,fontWeight:700,
+                    color:"#111827",background:"rgba(245,247,251,0.9)",cursor:"pointer"}}>{l}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
