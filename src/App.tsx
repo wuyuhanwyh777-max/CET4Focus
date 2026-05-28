@@ -784,29 +784,19 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
   const { shown, remaining, sentinelRef, setVisible } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
 
-  const [pickOpen, setPickOpen] = useState(false);
-
   function scrollTo(letter: string) {
     const idx = groups.findIndex(([l]) => l === letter);
     if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
-    setPickOpen(false);
     setTimeout(() => {
       const el = document.getElementById(`lib-${letter}`);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 250);
+    }, 100);
   }
 
   return (
     <section className="lib-page">
       <div className="lib-top">
-        <div className="lib-title-row">
-          <h1>词库</h1>
-          {letters.length > 1 && (
-            <button className="letter-trigger" onClick={() => setPickOpen(true)}>
-              跳转 <ChevronLeft size={14} style={{transform:"rotate(-90deg)"}} />
-            </button>
-          )}
-        </div>
+        <h1>词库</h1>
         <div className="lib-search">
           <Search size={16} />
           <input placeholder="搜索单词..." value={query} onChange={(e) => setQuery(e.target.value)} />
@@ -833,20 +823,6 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
           ))}
         </nav>
       </div>
-      {pickOpen && (
-        <div className="picker-overlay" onClick={() => setPickOpen(false)}>
-          <div className="picker-sheet" onClick={(e) => e.stopPropagation()}>
-            <div className="picker-handle" />
-            <div className="picker-grid">
-              {letters.map((l, i) => (
-                <button key={l} className="picker-cell" style={{animationDelay:`${i*0.015}s`}} onClick={() => scrollTo(l)}>
-                  {l}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
@@ -867,12 +843,9 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
   const { shown, remaining, sentinelRef, setVisible } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
 
-  const [pickOpen, setPickOpen] = useState(false);
-
   function scrollTo(letter: string) {
     const idx = groups.findIndex(([l]) => l === letter);
     if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
-    setPickOpen(false);
     setTimeout(() => {
       const el = document.getElementById(`fav-${letter}`);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -882,14 +855,7 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
   return (
     <section className="lib-page">
       <div className="lib-top">
-        <div className="lib-title-row">
-          <h1>生词本</h1>
-          {letters.length > 1 && (
-            <button className="letter-trigger" onClick={() => setPickOpen(true)}>
-              跳转 <ChevronLeft size={14} style={{transform:"rotate(-90deg)"}} />
-            </button>
-          )}
-        </div>
+        <h1>生词本</h1>
         <div className="lib-search">
           <Search size={16} />
           <input placeholder="搜索生词..." value={query} onChange={(e) => setQuery(e.target.value)} />
@@ -917,20 +883,6 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
           </nav>
         )}
       </div>
-      {pickOpen && (
-        <div className="picker-overlay" onClick={() => setPickOpen(false)}>
-          <div className="picker-sheet" onClick={(e) => e.stopPropagation()}>
-            <div className="picker-handle" />
-            <div className="picker-grid">
-              {letters.map((l, i) => (
-                <button key={l} className="picker-cell" style={{animationDelay:`${i*0.015}s`}} onClick={() => scrollTo(l)}>
-                  {l}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

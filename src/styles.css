@@ -981,7 +981,8 @@ h2 {
 .badge-icon { font-size: 22px; }
 
 @media (max-width: 860px) {
-  .lib-index { display: none; }
+  .lib-index { position: fixed; right: 4px; top: 50%; transform: translateY(-50%); z-index: 10; padding: 2px; gap: 0; }
+  .lib-index button { width: 22px; height: 18px; font-size: 10px; border-radius: 4px; }
   .compact-grid { grid-template-columns: 1fr; }
 }
 

@@ -29,18 +29,31 @@ let content = readFileSync(cet4Path, "utf-8");
 let updated = 0;
 let missing = 0;
 
-// Match each w(...) call and add phonetic params if missing
+// Match each w(...) call — handles both with and without phonetic params
 content = content.replace(
   /w\("([^"]+)",\s*"([^"]*)",\s*"([^"]*)",\s*"([^"]*)",\s*(true|false),\s*(true|false),\s*(\[[^\]]*\])\)/g,
   (fullMatch, word, pos, zh, en, high, key, tags) => {
     const phonetic = phoneticMap.get(word.toLowerCase());
     if (phonetic) {
-      // escape backslashes and double quotes for JS string
       const safePhonetic = phonetic.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
       updated++;
-      return `w("${word}", "${pos}", "${zh}", "${en}", ${high}, ${key}, ${tags}, "${safePhonetic}", "")`;
+      return `w("${word}", "${pos}", "${zh}", "${en}", ${high}, ${key}, ${tags}, "${safePhonetic}", "${safePhonetic}")`;
     }
     missing++;
+    return fullMatch;
+  }
+);
+
+// Handle already-injected lines (one phonetic + empty): re-inject with both UK/US filled
+content = content.replace(
+  /w\("([^"]+)",\s*"([^"]*)",\s*"([^"]*)",\s*"([^"]*)",\s*(true|false),\s*(true|false),\s*(\[[^\]]*\]),\s*"([^"]*)",\s*"([^"]*)"\)/g,
+  (fullMatch, word, pos, zh, en, high, key, tags, uk, us) => {
+    const phonetic = phoneticMap.get(word.toLowerCase());
+    if (phonetic && (!us || us === "")) {
+      const safePhonetic = phonetic.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+      updated++;
+      return `w("${word}", "${pos}", "${zh}", "${en}", ${high}, ${key}, ${tags}, "${safePhonetic}", "${safePhonetic}")`;
+    }
     return fullMatch;
   }
 );
