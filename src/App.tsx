@@ -783,13 +783,16 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
   const { shown, remaining, sentinelRef, setVisible } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
 
+  const [pickerOpen, setPickerOpen] = useState(false);
+
   function scrollTo(letter: string) {
     const idx = groups.findIndex(([l]) => l === letter);
     if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
+    setPickerOpen(false);
     setTimeout(() => {
       const el = document.getElementById(`lib-${letter}`);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
+    }, 150);
   }
 
   return (
@@ -806,7 +809,7 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
         <div className="lib-groups">
           {shown.map(([letter, words]) => (
             <div key={letter} id={`lib-${letter}`} className="lib-group">
-              <div className="lib-header">{letter}<span>{words.length}词</span></div>
+              <button className="lib-header" onClick={() => setPickerOpen(true)}>{letter}<span>{words.length}词</span></button>
               <div className="compact-grid">
                 {words.map((word) => <CompactCard key={word.word} word={word} favorite={Boolean(favorites[word.word])} onToggle={onToggle} onDetail={onDetail} />)}
               </div>
@@ -816,12 +819,19 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
           {groups.length === 0 && !query && <div className="empty">加载中...</div>}
           {groups.length === 0 && query && <div className="empty">没有匹配的单词</div>}
         </div>
-        <nav className="lib-index">
-          {letters.map((l) => (
-            <button key={l} onClick={() => scrollTo(l)}>{l}</button>
-          ))}
-        </nav>
       </div>
+      {pickerOpen && (
+        <div className="picker-overlay" onClick={() => setPickerOpen(false)}>
+          <div className="picker-modal" onClick={(e) => e.stopPropagation()}>
+            <p className="picker-title">跳转到</p>
+            <div className="picker-grid">
+              {letters.map((l, i) => (
+                <button key={l} className="picker-cell" style={{ animationDelay: `${i * 0.015}s` }} onClick={() => scrollTo(l)}>{l}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -842,13 +852,16 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
   const { shown, remaining, sentinelRef, setVisible } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
 
+  const [pickerOpen, setPickerOpen] = useState(false);
+
   function scrollTo(letter: string) {
     const idx = groups.findIndex(([l]) => l === letter);
     if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
+    setPickerOpen(false);
     setTimeout(() => {
       const el = document.getElementById(`fav-${letter}`);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 250);
+    }, 150);
   }
 
   return (
@@ -865,7 +878,7 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
         <div className="lib-groups">
           {shown.map(([letter, words]) => (
             <div key={letter} id={`fav-${letter}`} className="lib-group">
-              <div className="lib-header">{letter}<span>{words.length}词</span></div>
+              <button className="lib-header" onClick={() => setPickerOpen(true)}>{letter}<span>{words.length}词</span></button>
               <div className="compact-grid">
                 {words.map((word) => <CompactCard key={word.word} word={word} favorite={true} onToggle={onToggle} onDetail={onDetail} />)}
               </div>
@@ -874,14 +887,19 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
           {remaining > 0 && <div ref={sentinelRef} className="lib-placeholder" />}
           {groups.length === 0 && <div className="empty">还没有收藏单词，去查询或学习时加入生词本吧。</div>}
         </div>
-        {letters.length > 0 && (
-          <nav className="lib-index">
-            {letters.map((l) => (
-              <button key={l} onClick={() => scrollTo(l)}>{l}</button>
-            ))}
-          </nav>
-        )}
       </div>
+      {pickerOpen && letters.length > 0 && (
+        <div className="picker-overlay" onClick={() => setPickerOpen(false)}>
+          <div className="picker-modal" onClick={(e) => e.stopPropagation()}>
+            <p className="picker-title">跳转到</p>
+            <div className="picker-grid">
+              {letters.map((l, i) => (
+                <button key={l} className="picker-cell" style={{ animationDelay: `${i * 0.015}s` }} onClick={() => scrollTo(l)}>{l}</button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
