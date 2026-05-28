@@ -2,3 +2,6 @@
 dist
 ecdict.csv
 *.local
+
+# Local Netlify folder
+.netlify

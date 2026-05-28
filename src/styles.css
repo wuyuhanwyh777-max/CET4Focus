@@ -815,8 +815,59 @@ h2 {
 }
 .lib-groups { flex: 1; min-width: 0; }
 .lib-group { margin-bottom: 6px; }
-.lib-placeholder {
-  padding: 18px; text-align: center; color: var(--muted); font-size: 13px;
+.lib-placeholder { padding: 18px; }
+.lib-title-row { display: flex; align-items: center; justify-content: space-between; }
+.lib-title-row h1 { margin-bottom: 0; }
+
+.letter-trigger {
+  display: flex; align-items: center; gap: 4px;
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 13px; font-weight: 700; color: var(--blue);
+  background: rgba(37,99,235,0.08);
+  transition: transform 0.2s var(--spring-smooth), background 0.2s;
+}
+.letter-trigger:active { transform: scale(0.95); }
+
+/* Letter Picker Bottom Sheet */
+.picker-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);
+  animation: fadeIn 0.25s var(--spring-fast) both;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.picker-sheet {
+  width: 100%; max-width: 420px; max-height: 70vh;
+  padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
+  border-radius: 28px 28px 0 0;
+  background: rgba(255,255,255,0.96); backdrop-filter: blur(28px);
+  animation: sheetUp 0.4s var(--spring-bouncy) both;
+  overflow-y: auto;
+}
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.picker-handle {
+  width: 36px; height: 5px; border-radius: 999px;
+  background: rgba(15,23,42,0.15); margin: 0 auto 14px;
+}
+.picker-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+}
+.picker-cell {
+  aspect-ratio: 1; border-radius: 18px;
+  font-size: 20px; font-weight: 700; color: var(--ink);
+  background: rgba(245,247,251,0.9);
+  animation: cellPop 0.35s var(--spring-bouncy) both;
+  transition: transform 0.2s var(--spring-smooth), background 0.2s;
+}
+.picker-cell:active {
+  transform: scale(0.9); background: rgba(37,99,235,0.12); color: var(--blue);
+}
+@keyframes cellPop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
 }
 .lib-header {
   position: sticky; top: 0; z-index: 4;

@@ -784,15 +784,27 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
   const { shown, remaining, sentinelRef } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
 
+  const [pickOpen, setPickOpen] = useState(false);
+
   function scrollTo(letter: string) {
-    const el = document.getElementById(`lib-${letter}`);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setPickOpen(false);
+    setTimeout(() => {
+      const el = document.getElementById(`lib-${letter}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
   }
 
   return (
     <section className="lib-page">
       <div className="lib-top">
-        <h1>词库</h1>
+        <div className="lib-title-row">
+          <h1>词库</h1>
+          {letters.length > 1 && (
+            <button className="letter-trigger" onClick={() => setPickOpen(true)}>
+              跳转 <ChevronLeft size={14} style={{transform:"rotate(-90deg)"}} />
+            </button>
+          )}
+        </div>
         <div className="lib-search">
           <Search size={16} />
           <input placeholder="搜索单词..." value={query} onChange={(e) => setQuery(e.target.value)} />
@@ -809,7 +821,7 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
               </div>
             </div>
           ))}
-          {remaining > 0 && <div ref={sentinelRef} className="lib-placeholder">还有 {remaining} 个分组...</div>}
+          {remaining > 0 && <div ref={sentinelRef} className="lib-placeholder" />}
           {groups.length === 0 && !query && <div className="empty">加载中...</div>}
           {groups.length === 0 && query && <div className="empty">没有匹配的单词</div>}
         </div>
@@ -819,6 +831,20 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
           ))}
         </nav>
       </div>
+      {pickOpen && (
+        <div className="picker-overlay" onClick={() => setPickOpen(false)}>
+          <div className="picker-sheet" onClick={(e) => e.stopPropagation()}>
+            <div className="picker-handle" />
+            <div className="picker-grid">
+              {letters.map((l, i) => (
+                <button key={l} className="picker-cell" style={{animationDelay:`${i*0.015}s`}} onClick={() => scrollTo(l)}>
+                  {l}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -839,15 +865,27 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
   const { shown, remaining, sentinelRef } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
 
+  const [pickOpen, setPickOpen] = useState(false);
+
   function scrollTo(letter: string) {
-    const el = document.getElementById(`fav-${letter}`);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setPickOpen(false);
+    setTimeout(() => {
+      const el = document.getElementById(`fav-${letter}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
   }
 
   return (
     <section className="lib-page">
       <div className="lib-top">
-        <h1>生词本</h1>
+        <div className="lib-title-row">
+          <h1>生词本</h1>
+          {letters.length > 1 && (
+            <button className="letter-trigger" onClick={() => setPickOpen(true)}>
+              跳转 <ChevronLeft size={14} style={{transform:"rotate(-90deg)"}} />
+            </button>
+          )}
+        </div>
         <div className="lib-search">
           <Search size={16} />
           <input placeholder="搜索生词..." value={query} onChange={(e) => setQuery(e.target.value)} />
@@ -864,7 +902,7 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
               </div>
             </div>
           ))}
-          {remaining > 0 && <div ref={sentinelRef} className="lib-placeholder">还有 {remaining} 个分组...</div>}
+          {remaining > 0 && <div ref={sentinelRef} className="lib-placeholder" />}
           {groups.length === 0 && <div className="empty">还没有收藏单词，去查询或学习时加入生词本吧。</div>}
         </div>
         {letters.length > 0 && (
@@ -875,6 +913,20 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
           </nav>
         )}
       </div>
+      {pickOpen && (
+        <div className="picker-overlay" onClick={() => setPickOpen(false)}>
+          <div className="picker-sheet" onClick={(e) => e.stopPropagation()}>
+            <div className="picker-handle" />
+            <div className="picker-grid">
+              {letters.map((l, i) => (
+                <button key={l} className="picker-cell" style={{animationDelay:`${i*0.015}s`}} onClick={() => scrollTo(l)}>
+                  {l}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
