@@ -639,35 +639,19 @@ function LearnPage({ state, setState, favorites, onToggle, onDetail }: { state: 
   );
 }
 
-function FlipCard({ word, onReview, onDetail }: { word: NormalizedWord; onReview: (word: NormalizedWord, known: boolean) => void; onDetail: (word: NormalizedWord) => void }) {
-  const [flipped, setFlipped] = useState(false);
+function ReviewCard({ word, onSelect }: { word: NormalizedWord; onSelect: (word: NormalizedWord) => void }) {
   return (
-    <article className={`flip-card ${flipped ? "flipped" : ""}`} onClick={() => setFlipped(!flipped)}>
-      <div className="flip-inner">
-        <div className="flip-front">
-          <h2>{word.word}</h2>
-          <Phonetics word={word} />
-          <p className="muted">点击翻转查看释义</p>
-          {word.masteryStatus !== "未掌握" && <span className="tag">{word.masteryStatus}</span>}
-        </div>
-        <div className="flip-back">
-          <h3>{word.word}</h3>
-          <p className="flip-zh">{word.meanings[0]?.definitionZh}</p>
-          {word.meanings[0]?.partOfSpeech && <span className="tag">{word.meanings[0].partOfSpeech}</span>}
-          <WordBody word={word} />
-          <div className="button-row" onClick={(e) => e.stopPropagation()}>
-            <button className="secondary danger" onClick={() => onReview(word, false)}>不认识</button>
-            <button className="primary success" onClick={() => onReview(word, true)}>认识</button>
-            <button className="secondary" onClick={() => onDetail(word)}>详情</button>
-          </div>
-        </div>
-      </div>
+    <article className="review-card" onClick={() => onSelect(word)}>
+      <h3>{word.word}</h3>
+      <Phonetics word={word} />
+      {word.masteryStatus && <span className="tag">{word.masteryStatus}</span>}
+      <p className="muted" style={{fontSize:12,marginTop:6}}>点击查看释义</p>
     </article>
   );
 }
 
 function ReviewPage({ words, onDetail, onReview }: { words: NormalizedWord[]; onDetail: (word: NormalizedWord) => void; onReview: (word: NormalizedWord, known: boolean) => void }) {
-  const reviewed = words.length;
+  const [selected, setSelected] = useState<NormalizedWord | null>(null);
   return (
     <section>
       <h1>今日复习</h1>
@@ -675,8 +659,23 @@ function ReviewPage({ words, onDetail, onReview }: { words: NormalizedWord[]; on
       {words.length === 0 ? (
         <div className="empty">今天没有待复习单词，继续学习新单词吧。</div>
       ) : (
-        <div className="flip-grid">
-          {words.map((word) => <FlipCard key={word.word} word={word} onReview={onReview} onDetail={onDetail} />)}
+        <div className="review-grid">
+          {words.map((word) => <ReviewCard key={word.word} word={word} onSelect={setSelected} />)}
+        </div>
+      )}
+      {selected && (
+        <div className="review-overlay" onClick={() => setSelected(null)}>
+          <div className="review-sheet" onClick={(e) => e.stopPropagation()}>
+            <div className="review-handle" />
+            <h2>{selected.word}</h2>
+            <Phonetics word={selected} />
+            <WordBody word={selected} />
+            <div className="button-row">
+              <button className="secondary danger" onClick={() => { onReview(selected, false); setSelected(null); }}>不认识</button>
+              <button className="primary success" onClick={() => { onReview(selected, true); setSelected(null); }}>认识</button>
+              <button className="secondary" onClick={() => { onDetail(selected); setSelected(null); }}>详情</button>
+            </div>
+          </div>
         </div>
       )}
     </section>
