@@ -276,7 +276,6 @@ export function App() {
     setScrollPosition(`list:${from}`, window.scrollY);
     setDetail(normalizeWordData(word));
     setDetailBack(from);
-    window.setTimeout(() => window.scrollTo({ top: 0, behavior: "auto" }), 0);
   }
 
   function closeDetail() {
@@ -654,36 +653,6 @@ function ReviewCard({ word, onSelect }: { word: NormalizedWord; onSelect: (word:
   );
 }
 
-function ReviewDetailModal({
-  word,
-  onClose,
-  onDetail,
-  onReview,
-}: {
-  word: NormalizedWord;
-  onClose: () => void;
-  onDetail: (word: NormalizedWord) => void;
-  onReview: (word: NormalizedWord, known: boolean) => void;
-}) {
-  return createPortal(
-    <div className="review-overlay" onClick={onClose} role="dialog" aria-modal="true">
-      <div className="review-sheet" onClick={(e) => e.stopPropagation()}>
-        <button className="review-close" onClick={onClose} aria-label="关闭释义弹窗">×</button>
-        <div className="review-handle" />
-        <h2>{word.word}</h2>
-        <Phonetics word={word} />
-        <WordBody word={word} />
-        <div className="button-row">
-          <button className="secondary danger" onClick={() => { onReview(word, false); onClose(); }}>不认识</button>
-          <button className="primary success" onClick={() => { onReview(word, true); onClose(); }}>认识</button>
-          <button className="secondary" onClick={() => { onClose(); onDetail(word); }}>详情</button>
-        </div>
-      </div>
-    </div>,
-    document.body,
-  );
-}
-
 function ReviewPage({ words, onDetail, onReview }: { words: NormalizedWord[]; onDetail: (word: NormalizedWord) => void; onReview: (word: NormalizedWord, known: boolean) => void }) {
   const [selected, setSelected] = useState<NormalizedWord | null>(null);
   return (
@@ -698,12 +667,20 @@ function ReviewPage({ words, onDetail, onReview }: { words: NormalizedWord[]; on
         </div>
       )}
       {selected && (
-        <ReviewDetailModal
-          word={selected}
-          onClose={() => setSelected(null)}
-          onDetail={onDetail}
-          onReview={onReview}
-        />
+        <div className="review-overlay" onClick={() => setSelected(null)}>
+          <div className="review-sheet" onClick={(e) => e.stopPropagation()}>
+            <button className="review-close" onClick={() => setSelected(null)}>✕</button>
+            <div className="review-handle" />
+            <h2>{selected.word}</h2>
+            <Phonetics word={selected} />
+            <WordBody word={selected} />
+            <div className="button-row">
+              <button className="secondary danger" onClick={() => { onReview(selected, false); setSelected(null); }}>不认识</button>
+              <button className="primary success" onClick={() => { onReview(selected, true); setSelected(null); }}>认识</button>
+              <button className="secondary" onClick={() => { onDetail(selected); setSelected(null); }}>详情</button>
+            </div>
+          </div>
+        </div>
       )}
     </section>
   );
