@@ -1,0 +1,17 @@
+{
+  "name": "CET-4 Focus 四级智能背词助手",
+  "short_name": "CET-4 Focus",
+  "description": "四级备考、查词、生词本和每日复习 PWA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
