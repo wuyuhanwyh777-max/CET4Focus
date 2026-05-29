@@ -12,9 +12,12 @@ let doAll = false;
 let provider = "all";
 
 for (let i = 0; i < args.length; i++) {
-  if (args[i] === "--limit" && args[i + 1]) { limit = parseInt(args[i + 1]); i++; }
-  else if (args[i] === "--all") doAll = true;
-  else if (args[i] === "--provider" && args[i + 1]) { provider = args[i + 1]; i++; }
+  const a = args[i];
+  if (a === "--limit" && args[i + 1]) { limit = parseInt(args[i + 1]); i++; }
+  else if (a.startsWith("--limit=")) { limit = parseInt(a.split("=")[1]); }
+  else if (a === "--all") doAll = true;
+  else if (a === "--provider" && args[i + 1]) { provider = args[i + 1]; i++; }
+  else if (a.startsWith("--provider=")) { provider = a.split("=")[1]; }
 }
 
 // Load word list
@@ -111,7 +114,10 @@ function loadTatoeba() {
     const parts = line.split("\t");
     let eng, cmn;
     if (parts.length === 2) {
-      // Format A: eng<TAB>cmn
+      eng = parts[0].trim();
+      cmn = parts[1].trim();
+    } else if (parts.length === 3) {
+      // ManyThings format: eng<TAB>cmn<TAB>attribution
       eng = parts[0].trim();
       cmn = parts[1].trim();
     } else if (parts.length >= 4) {

@@ -434,5 +434,361 @@
   "insist": {
     "en": "I insist that my secretary dresses nicely.",
     "zh": ""
+  },
+  "philosopher": {
+    "en": "I wanted to become a philosopher.",
+    "zh": "我想成爲哲學家。"
+  },
+  "scholarship": {
+    "en": "Tom was able to go to college thanks to a scholarship.",
+    "zh": "因為一份獎學金，Tom得以上大學。"
+  },
+  "ignorance": {
+    "en": "All you need is ignorance and confidence and the success is sure.",
+    "zh": "要想成功只需要无知和自信。"
+  },
+  "intelligence": {
+    "en": "To have doubts about oneself is the first sign of intelligence.",
+    "zh": "自我怀疑是聪明的第一标志。"
+  },
+  "tiny": {
+    "en": "He came from a tiny mountain town.",
+    "zh": "他來自一個小山城。"
+  },
+  "cozy": {
+    "en": "He lives in a cozy little house.",
+    "zh": "他住在一個舒適的小房子裡。"
+  },
+  "clinic": {
+    "en": "She went to the Takasu clinic.",
+    "zh": "她去了高須診所。"
+  },
+  "chemical": {
+    "en": "Immediately after it caught fire, the chemical factory blew up.",
+    "zh": "化学工厂一着火就爆炸了。"
+  },
+  "currently": {
+    "en": "Burj Khalifa is currently the tallest skyscraper in the world.",
+    "zh": "目前哈里發塔是世界上最高的摩天大樓。"
+  },
+  "imitate": {
+    "en": "Parrots can imitate the human voice.",
+    "zh": "鸚鵡會模仿人的聲音。"
+  },
+  "injure": {
+    "en": "You may injure yourself if you don't follow safety procedures.",
+    "zh": "如果你不按照安全手续来的话，你可能会受伤的。"
+  },
+  "consult": {
+    "en": "I don't know who to consult with.",
+    "zh": "我不知道该和谁商量好。"
+  },
+  "plastic": {
+    "en": "A plastic dish will melt on the stove.",
+    "zh": "塑料盘子在烤箱里会化的。"
+  },
+  "distract": {
+    "en": "The crowd was distracted by a helicopter hovering over the stadium when the only goal of the game was scored.",
+    "zh": ""
+  },
+  "subdivision": {
+    "en": "Work on one subdivision at a time.",
+    "zh": ""
+  },
+  "misunderstand": {
+    "en": "Please don't misunderstand me.",
+    "zh": "千万别误会我的意思。"
+  },
+  "detail": {
+    "en": "Note this fine detail in the lower left corner.",
+    "zh": ""
+  },
+  "convincing": {
+    "en": "Our convincing evidence was sufficient in the end to win the trial.",
+    "zh": ""
+  },
+  "donate": {
+    "en": "He donated an etching from his own collection to the new art gallery.",
+    "zh": ""
+  },
+  "compare": {
+    "en": "Compare the tiger's coloration with that of the zebra.",
+    "zh": ""
+  },
+  "item": {
+    "en": "Tweezers are great for manipulating small items.",
+    "zh": ""
+  },
+  "concrete": {
+    "en": "The road was made of concrete that had been poured in large slabs.",
+    "zh": ""
+  },
+  "govern": {
+    "en": "The old king governed the land wisely.",
+    "zh": ""
+  },
+  "classify": {
+    "en": "Should we classify \"make up\" as an idiom or as a phrasal verb?",
+    "zh": ""
+  },
+  "restrict": {
+    "en": "After suffering diahrroea, the patient was restricted to a diet of rice, cold meat, and yoghurt.",
+    "zh": ""
+  },
+  "majority": {
+    "en": "The majority agreed that the new proposal was the best.",
+    "zh": ""
+  },
+  "virtual": {
+    "en": "In fact a defeat on the battlefield, Tet was a virtual victory for the North, owing to its effect on public opinion.",
+    "zh": ""
+  },
+  "programming": {
+    "en": "The network changed its programming to mess with DVRs again.",
+    "zh": ""
+  },
+  "coach": {
+    "en": "John flew coach to Vienna, but first-class back home.",
+    "zh": ""
+  },
+  "crisis": {
+    "en": "In a crisis, you must get in touch with your teacher.",
+    "zh": "在危險的時候你必須跟你的老師聯繫。"
+  },
+  "interconnect": {
+    "en": "The Internet interconnects a set of networks.",
+    "zh": ""
+  },
+  "enrich": {
+    "en": "Hobbies enrich lives.",
+    "zh": ""
+  },
+  "poll": {
+    "en": "The student council had a poll to see what people want served in the cafeteria.",
+    "zh": ""
+  },
+  "consent": {
+    "en": "After reflecting a little bit, I've consented.",
+    "zh": ""
+  },
+  "utility": {
+    "en": "I've bought a new disk utility that can recover deleted files.",
+    "zh": ""
+  },
+  "rank": {
+    "en": "Your gym clothes are rank, bro – when'd you last wash 'em?",
+    "zh": ""
+  },
+  "inflation": {
+    "en": "The inflation of the balloon took five hours.",
+    "zh": ""
+  },
+  "secure": {
+    "en": "to secure a creditor against loss; to secure a debt by a mortgage",
+    "zh": ""
+  },
+  "interpret": {
+    "en": "to interpret an Indian speech",
+    "zh": ""
+  },
+  "criticize": {
+    "en": "They criticized him for endangering people's lives.",
+    "zh": ""
+  },
+  "implementation": {
+    "en": "His implementation works, but it needs some fine-tuning.",
+    "zh": ""
+  },
+  "enable": {
+    "en": "His parents enabled him to go on buying drugs.",
+    "zh": ""
+  },
+  "narrow": {
+    "en": "the narrows of New York harbor",
+    "zh": ""
+  },
+  "overcharge": {
+    "en": "to overcharge a description",
+    "zh": ""
+  },
+  "shortcut": {
+    "en": "There are shortcuts to some of my favourite applications on my desktop.",
+    "zh": ""
+  },
+  "leisure": {
+    "en": "She spends her leisure time making dolls.",
+    "zh": "她利用空闲时间做布娃娃。"
+  },
+  "density": {
+    "en": "The number of particles per unit volume of a specified volume can be considered to be the particle density for the specified volume.",
+    "zh": ""
+  },
+  "department": {
+    "en": "Technical things are not his department; he's a people person.",
+    "zh": ""
+  },
+  "desire": {
+    "en": "It is my desire to speak with you.",
+    "zh": ""
+  },
+  "legend": {
+    "en": "According to the legend on the map, that building is a school.",
+    "zh": ""
+  },
+  "dictator": {
+    "en": "Dictators are always punished eventually.",
+    "zh": ""
+  },
+  "quit": {
+    "en": "After having to work overtime without being paid, I quit my job.",
+    "zh": ""
+  },
+  "outgoing": {
+    "en": "Tom is very outgoing and enjoys meeting people; his brother, on the other hand, is painfully shy.",
+    "zh": ""
+  },
+  "revenge": {
+    "en": "Indifference is the sweetest revenge.",
+    "zh": ""
+  },
+  "reverse": {
+    "en": "We believed the Chinese weren't ready for us. In fact, the reverse was true.",
+    "zh": ""
+  },
+  "enroll": {
+    "en": "They were eager to enroll new recruits.",
+    "zh": ""
+  },
+  "logically": {
+    "en": "An argument may be logically sound without being true.",
+    "zh": "不正确的命题听起来可能符合逻辑。"
+  },
+  "rental": {
+    "en": "It's just a rental, so I don't need to take very good care of it.",
+    "zh": ""
+  },
+  "component": {
+    "en": "A CPU is a component of a computer.",
+    "zh": ""
+  },
+  "quotation": {
+    "en": "\"Where they burn books, they will also burn people\" is a famous quotation from Heinrich Heine.",
+    "zh": ""
+  },
+  "faith": {
+    "en": "I have faith in the goodness of my fellow man.",
+    "zh": ""
+  },
+  "invalid": {
+    "en": "This invalid contract cannot be legally enforced.",
+    "zh": ""
+  },
+  "invade": {
+    "en": "Under some circumstances police are allowed to invade a person's privacy.",
+    "zh": ""
+  },
+  "separately": {
+    "en": "We've been living separately for three years.",
+    "zh": ""
+  },
+  "strain": {
+    "en": "There is a strain of madness in her family.",
+    "zh": ""
+  },
+  "lap": {
+    "en": "The boy was sitting on his mother's lap.",
+    "zh": ""
+  },
+  "character": {
+    "en": "A single locus governing the petal colour character was detected on the linkage group A2.",
+    "zh": ""
+  },
+  "avail": {
+    "en": "I tried fixing it, to no avail.  Labor, without economy, is of little avail.",
+    "zh": ""
+  },
+  "instant": {
+    "en": "She paused for only an instant, which was just enough time for John to change the subject.",
+    "zh": ""
+  },
+  "democratic": {
+    "en": "The United States is a democratic country, as the citizens are allowed to choose leaders to represent their interests.",
+    "zh": ""
+  },
+  "barely": {
+    "en": "The plane is so far away now I can barely see it.",
+    "zh": ""
+  },
+  "vanish": {
+    "en": "a as in ale ordinarily ends with a vanish of i as in ill.",
+    "zh": ""
+  },
+  "harsh": {
+    "en": "Quit harshing me already, I said that I was sorry!",
+    "zh": ""
+  },
+  "reliable": {
+    "en": "the old reliables",
+    "zh": ""
+  },
+  "pregnant": {
+    "en": "I went to the doctor and, guess what, I'm pregnant!",
+    "zh": ""
+  },
+  "slippery": {
+    "en": "Oily substances render things slippery.",
+    "zh": ""
+  },
+  "overwhelm": {
+    "en": "The dinghy was overwhelmed by the great wave.",
+    "zh": ""
+  },
+  "stressful": {
+    "en": "Cities are exciting places, but also stressful.",
+    "zh": "城市是令人興奮的地方，但也會讓人產生壓力。"
+  },
+  "terminal": {
+    "en": "a student's terminal fees",
+    "zh": ""
+  },
+  "severe": {
+    "en": "a severe taskmaster",
+    "zh": ""
+  },
+  "diplomatic": {
+    "en": "Albania immediately severed diplomatic relations with Zimbabwe.",
+    "zh": ""
+  },
+  "candidate": {
+    "en": "He was the strongest candidate for the position.",
+    "zh": "他是那个职位最有希望的候选人。"
+  },
+  "fund": {
+    "en": "a fund for the maintenance of underprivileged students",
+    "zh": ""
+  },
+  "delight": {
+    "en": "A beautiful landscape delights the eye.",
+    "zh": ""
+  },
+  "inadequate": {
+    "en": "inadequate representation",
+    "zh": ""
+  },
+  "steady": {
+    "en": "Hold the ladder steady while I go up.",
+    "zh": ""
+  },
+  "identification": {
+    "en": "Much education and experience is required for proper identification of bird species",
+    "zh": ""
+  },
+  "retirement": {
+    "en": "His life after retirement was unhappy.",
+    "zh": "他退休後的生活不快樂。"
+  },
+  "commit": {
+    "en": "Tony should be committed to a nuthouse!",
+    "zh": ""
   }
 }
