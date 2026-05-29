@@ -10442,5 +10442,605 @@
   "skill": {
     "en": "Fluency in English is a very marketable skill today.",
     "zh": "流利的英語在今天是一種十分搶手的技能。"
+  },
+  "disappear": {
+    "en": "She slowly disappeared into the foggy forest.",
+    "zh": "她緩緩消失在霧氣瀰漫的森林中。"
+  },
+  "inquire": {
+    "en": "\"How long does it take to get to Vienna on foot?\" he inquired.",
+    "zh": "“步行到 Vienon 需要多少时间？”他问。"
+  },
+  "engage": {
+    "en": "My father has been engaged in foreign trade for many years.",
+    "zh": "我父亲经营外贸多年。"
+  },
+  "ingredient": {
+    "en": "Mix the ingredients well.",
+    "zh": "把配料好好混一下。"
+  },
+  "hospitalize": {
+    "en": "Do I have to be hospitalized?",
+    "zh": "我必须去医院吗？"
+  },
+  "toothache": {
+    "en": "She visits the dentist on a regular basis, so she seldom gets toothaches.",
+    "zh": "她定期去看牙医，所以她很少牙痛。"
+  },
+  "cautious": {
+    "en": "Tom approached cautiously.",
+    "zh": "汤姆小心地接近。"
+  },
+  "amaze": {
+    "en": "If I were to tell you all I know, you would be amazed.",
+    "zh": "要是我告诉你我所知的一切，你会被惊呆的。"
+  },
+  "instruction": {
+    "en": "I just followed your instructions.",
+    "zh": "我只是照著你的指示。"
+  },
+  "twist": {
+    "en": "She twisted her ankle while she was doing exercise.",
+    "zh": "她锻炼时扭伤了脚踝。"
+  },
+  "clue": {
+    "en": "The police didn't find any clues.",
+    "zh": "警方沒有發現任何線索。"
+  },
+  "disadvantage": {
+    "en": "It is true that television also has some disadvantages.",
+    "zh": "电视的确有一些缺点。"
+  },
+  "encourage": {
+    "en": "Tom encouraged Mary to learn how to speak French.",
+    "zh": "汤姆鼓励玛丽学着说法语。"
+  },
+  "donation": {
+    "en": "Cash donations will be accepted.",
+    "zh": "接受现金捐赠。"
+  },
+  "consist": {
+    "en": "A football team consists of eleven players.",
+    "zh": "一个足球队由十一个球员组成。"
+  },
+  "implement": {
+    "en": "Lots of companies have implemented an eight-hour working day.",
+    "zh": "很多公司實行8小時工作制。"
+  },
+  "origin": {
+    "en": "What are the origins of the Olympics?",
+    "zh": "奥林匹克的起源是什么？"
+  },
+  "define": {
+    "en": "Things are not clearly defined.",
+    "zh": "事情還沒給解釋清楚。"
+  },
+  "assign": {
+    "en": "The assignment took me longer than I had expected.",
+    "zh": "我用了比我预期更长的时间来完成作业。"
+  },
+  "irritate": {
+    "en": "If someone irritates you, it is best not to react immediately.",
+    "zh": "如果有人激怒你，你最好不要立刻做出反应。"
+  },
+  "expectation": {
+    "en": "Other people's expectations affect how we behave.",
+    "zh": "其他人的期望會影響我們的行為。"
+  },
+  "prohibit": {
+    "en": "The importation of rare wild animals to this country is strictly prohibited.",
+    "zh": "该国严禁进口稀有野生动物。"
+  },
+  "reject": {
+    "en": "You should've rejected such an unfair proposal.",
+    "zh": "你本该拒绝一个那么不公平的提议。"
+  },
+  "squeeze": {
+    "en": "She squeezed the juice from many oranges.",
+    "zh": "她用了許多柳橙來榨汁。"
+  },
+  "review": {
+    "en": "The movie received mixed reviews.",
+    "zh": "影片得到的评价褒贬不一。"
+  },
+  "acknowledge": {
+    "en": "She acknowledged that my statement was true.",
+    "zh": "她承認我的聲明是真實的。"
+  },
+  "originate": {
+    "en": "Buddhism originated in India.",
+    "zh": "佛教來自印度。"
+  },
+  "reluctant": {
+    "en": "He reluctantly agreed to my proposal.",
+    "zh": "他勉強同意了我的建議。"
+  },
+  "endanger": {
+    "en": "There are many endangered species.",
+    "zh": "有許多瀕危物种。"
+  },
+  "illustrate": {
+    "en": "The artist who illustrated this book is very good.",
+    "zh": "給這本書畫插畫的畫家很好。"
+  },
+  "worsen": {
+    "en": "Due to the worsening weather, the departure was delayed.",
+    "zh": "由于天气变差，出发延迟了。"
+  },
+  "flow": {
+    "en": "The bathtub was filled with hot water and flower petals.",
+    "zh": "浴缸裡滿是熱水和花瓣。"
+  },
+  "mill": {
+    "en": "My dad used to be a miller.",
+    "zh": "我父亲以前是磨坊主。"
+  },
+  "physical": {
+    "en": "Tom was there physically, but not mentally.",
+    "zh": "汤姆人在心不在。"
+  },
+  "bless": {
+    "en": "It is more blessed to give than to receive.",
+    "zh": "赠与比接受更让人觉得幸福。"
+  },
+  "asset": {
+    "en": "He has over a million dollars in assets.",
+    "zh": "他有超过一百万美元的资产。"
+  },
+  "seize": {
+    "en": "The policeman seized the boy by the arm.",
+    "zh": "警察抓住了那个男孩的手臂。"
+  },
+  "confront": {
+    "en": "Japan is confronted with severe economic problems.",
+    "zh": "日本正面臨著嚴重的經濟問題。"
+  },
+  "derive": {
+    "en": "Many English words are derived from Latin.",
+    "zh": "許多英文單字源自於拉丁文。"
+  },
+  "underline": {
+    "en": "Translate the underlined part.",
+    "zh": "翻译划线部分。"
+  },
+  "accumulate": {
+    "en": "Tom has accumulated a lot of junk.",
+    "zh": "湯姆屯了很多垃圾。"
+  },
+  "calculate": {
+    "en": "The Prime Minister's speech was calculated to anger the opposition parties.",
+    "zh": "總理的發言估計激怒了在野黨。"
+  },
+  "accustom": {
+    "en": "He quickly accustomed himself to his new surroundings.",
+    "zh": "他很快就适应了新环境。"
+  },
+  "devote": {
+    "en": "He devoted the last years of his life to writing his autobiography.",
+    "zh": "他晚年致力於寫自傳。"
+  },
+  "resemble": {
+    "en": "She resembles her mother in every respect.",
+    "zh": "她在各方面都像她的母親。"
+  },
+  "substitute": {
+    "en": "She substituted margarine for butter.",
+    "zh": "她用人造黄油代替了黄油。"
+  },
+  "chap": {
+    "en": "I get chapped lips every winter.",
+    "zh": "每年冬天，我的嘴唇都会干裂。"
+  },
+  "peaceful": {
+    "en": "She passed away peacefully in her sleep.",
+    "zh": "她在睡眠中安详地去世了。"
+  },
+  "compete": {
+    "en": "I competed with him for the championship.",
+    "zh": "我和他競爭冠軍。"
+  },
+  "joint": {
+    "en": "They worked jointly on this project.",
+    "zh": "他们一起为这个项目工作过。"
+  },
+  "resolve": {
+    "en": "This case might not get resolved for a while.",
+    "zh": "這個案件可能不會在短時間內就解決。"
+  },
+  "advertisement": {
+    "en": "We've received a lot of applications in answer to our advertisements.",
+    "zh": "我們已經收到了很多回應我們廣告的申請。"
+  },
+  "partner": {
+    "en": "The two men were business partners.",
+    "zh": "这两个男人是生意上的合作伙伴。"
+  },
+  "sting": {
+    "en": "Bee stings can be very painful.",
+    "zh": "蜜蜂螫人可以是非常痛苦的。"
+  },
+  "bathe": {
+    "en": "The little cabin was bathed in moonlight.",
+    "zh": "小木屋沐浴在月光之中。"
+  },
+  "stretch": {
+    "en": "The cat arched its back and stretched itself.",
+    "zh": "猫弓起背，伸了个懒腰。"
+  },
+  "custom": {
+    "en": "We're looking for someone who has experience in customer service.",
+    "zh": "我們正在尋找具有客服工作經驗的人。"
+  },
+  "defeat": {
+    "en": "The French were defeated at Waterloo.",
+    "zh": "法國人在滑鐵盧之役吃了敗仗。"
+  },
+  "stair": {
+    "en": "The old lady climbed the stairs with difficulty.",
+    "zh": "这名老妇艰难地爬上楼梯。"
+  },
+  "employ": {
+    "en": "Six people applied for the job, but none of them were employed.",
+    "zh": "六个人投了这份工作，但他们中没有一个被录用。"
+  },
+  "freeze": {
+    "en": "Water is liquid. When it freezes, it becomes solid.",
+    "zh": "水是液体。冻起来就成了固体。"
+  },
+  "complicate": {
+    "en": "Computers are capable of doing extremely complicated work.",
+    "zh": "电脑可以做极为复杂的工作。"
+  },
+  "entertain": {
+    "en": "I think a movie is more entertaining than any book.",
+    "zh": "我觉得一部电影比任何书都有趣。"
+  },
+  "bleed": {
+    "en": "Tom was bleeding heavily from a gunshot wound.",
+    "zh": "汤姆的枪伤伤口导致了大出血。"
+  },
+  "settlement": {
+    "en": "On this small island are two large towns and many small settlements.",
+    "zh": "這個小島上有兩座大城市及許多小村鎮。"
+  },
+  "frank": {
+    "en": "Frankly speaking, I don't agree with you.",
+    "zh": "实话说，我不赞成你。"
+  },
+  "bean": {
+    "en": "What's your favorite way to cook beans?",
+    "zh": "你最喜歡用什麼方法煮豆子？"
+  },
+  "local": {
+    "en": "Think globally, act locally.",
+    "zh": "放眼全球，立足本土。"
+  },
+  "network": {
+    "en": "You shouldn't share too much private information on the social networks.",
+    "zh": "你不应该在社交网络上分享过多私人信息。"
+  },
+  "unit": {
+    "en": "He is proud of having been educated in the United States.",
+    "zh": "他对自己在美国读过书这件事感到很骄傲。"
+  },
+  "duck": {
+    "en": "I tried to hit Tom, but he ducked.",
+    "zh": "我要去打汤姆，但是他避开了。"
+  },
+  "remark": {
+    "en": "I don't like these remarks.",
+    "zh": "我不喜歡這番話。"
+  },
+  "suspicion": {
+    "en": "The news confirmed my suspicions.",
+    "zh": "这一消息证实了我的怀疑。"
+  },
+  "drip": {
+    "en": "Constant dripping wears away a stone.",
+    "zh": "滴水穿石。"
+  },
+  "spin": {
+    "en": "What do you think would happen if the earth stopped spinning?",
+    "zh": "如果地球停止自传，你认为会发生什么？"
+  },
+  "encounter": {
+    "en": "We encountered a lot of difficulties on the expedition.",
+    "zh": "我们在探险的时候遇到了很多困难。"
+  },
+  "congratulation": {
+    "en": "I hear you passed the entrance exam. Congratulations!",
+    "zh": "我听说你通过了入学考试。恭喜你了！"
+  },
+  "proper": {
+    "en": "If you feed your dog properly, you can increase his lifespan.",
+    "zh": "合理地喂狗可以延长宠物寿命。"
+  },
+  "drain": {
+    "en": "Have you drained the bathtub?",
+    "zh": "你把浴缸裡的水放掉了嗎？"
+  },
+  "publish": {
+    "en": "He has just published an interesting series of articles.",
+    "zh": "他刚发表一系列有趣的文章。"
+  },
+  "glove": {
+    "en": "She left her gloves in the car.",
+    "zh": "她把她的手套留在車上了。"
+  },
+  "congratulate": {
+    "en": "They congratulated us on our victory.",
+    "zh": "他們祝賀我們的勝利。"
+  },
+  "convenience": {
+    "en": "The house has all the conveniences.",
+    "zh": "这套房子设施便利齐全。"
+  },
+  "immediate": {
+    "en": "If someone irritates you, it is best not to react immediately.",
+    "zh": "如果有人激怒你，你最好不要立刻做出反应。"
+  },
+  "groan": {
+    "en": "The soldier groaned with pain.",
+    "zh": "這名士兵痛苦地呻吟。"
+  },
+  "delegation": {
+    "en": "The delegations of both countries met in Geneva.",
+    "zh": "两国代表团在日内瓦会面。"
+  },
+  "bang": {
+    "en": "Tom and Mary's little boy loves sitting on the kitchen floor banging pots and pans.",
+    "zh": "湯姆和瑪莉的小兒子喜歡坐在廚房地板上敲打鍋碗瓢盆。"
+  },
+  "venture": {
+    "en": "Nothing ventured, nothing gained.",
+    "zh": "不入虎穴，焉得虎子。"
+  },
+  "roar": {
+    "en": "The large crowd roared in approval as Mark Knopfler played the first few bars of \"Money for Nothing\".",
+    "zh": "就像马克·诺弗勒早期演唱的歌曲《金钱无用》一样，绝大多数的人依然高呼赞成“金钱无用论”。"
+  },
+  "pigeon": {
+    "en": "Tom and I sat on a bench in the park and talked while we fed pigeons.",
+    "zh": "我和汤姆在公园的长椅上坐着，一边聊天一边喂着鸽子。"
+  },
+  "glitter": {
+    "en": "All that glitters is not gold.",
+    "zh": "發光的未必都是金子。"
+  },
+  "beast": {
+    "en": "If the lion is the king of beasts, the eagle is the king of birds.",
+    "zh": "狮子是兽类之王的话，鹰就是鸟类之王。"
+  },
+  "stripe": {
+    "en": "The stripes were horizontal.",
+    "zh": "條紋是水平的。"
+  },
+  "load": {
+    "en": "The old man loaded his mule with bags full of sand.",
+    "zh": "老人在骡子的背上放上了一个个装满了沙的袋子。"
+  },
+  "plunge": {
+    "en": "Stock prices plunged to a record low.",
+    "zh": "股票價格跌至歷史新低。"
+  },
+  "carrot": {
+    "en": "Carrots contain a lot of vitamin A.",
+    "zh": "胡蘿蔔中含有大量的維生素A。"
+  },
+  "afterward": {
+    "en": "Keep your eyes wide open before marriage, half shut afterwards.",
+    "zh": "婚前張開眼，婚後半閉眼。"
+  },
+  "rough": {
+    "en": "The skin of a shark is much rougher than that of a tuna fish.",
+    "zh": "鯊魚皮比金槍魚皮粗糙多了。"
+  },
+  "glance": {
+    "en": "She glanced briefly at the newspaper.",
+    "zh": "她很快地瞟了一眼報紙。"
+  },
+  "digest": {
+    "en": "Wine helps with digestion.",
+    "zh": "葡萄酒幫助消化。"
+  },
+  "fluid": {
+    "en": "Ebola spreads from person to person through bodily fluids.",
+    "zh": "埃博拉通過體液在人與人之間傳播。"
+  },
+  "bounce": {
+    "en": "I'm surprised Tom hasn't bounced back by now.",
+    "zh": "我很驚訝湯姆到現在還沒有恢復過來。"
+  },
+  "clothe": {
+    "en": "I have so many clothes I don't know what to wear tomorrow.",
+    "zh": "我有那么多衣服，以至于我不知道明天穿什么了。"
+  },
+  "attract": {
+    "en": "The coral reef is the region's prime attraction.",
+    "zh": "珊瑚礁是这个地区的主要景点。"
+  },
+  "gaze": {
+    "en": "We gazed at the beautiful scenery.",
+    "zh": "我們望著這美麗的風景。"
+  },
+  "whisper": {
+    "en": "Tom whispered something to Mary and she smiled.",
+    "zh": "汤姆小声对玛丽说了什么，玛丽笑了。"
+  },
+  "heel": {
+    "en": "She wears high heels to make herself look taller.",
+    "zh": "她穿著高跟鞋，這樣顯得更高一些。"
+  },
+  "pause": {
+    "en": "He paused to look at the poster.",
+    "zh": "他停下脚步看起海报。"
+  },
+  "expense": {
+    "en": "One thousand dollars will cover all the expenses for the party.",
+    "zh": "1000美元将负担聚会的全部费用。"
+  },
+  "arrangement": {
+    "en": "Arrangements have already been made.",
+    "zh": "已經安排好了。"
+  },
+  "settle": {
+    "en": "They got married and settled near Boston.",
+    "zh": "他們結了婚並定居在波士頓附近。"
+  },
+  "disguise": {
+    "en": "He got away disguised as a policeman.",
+    "zh": "他偽裝成警察逃跑了。"
+  },
+  "onion": {
+    "en": "I grow tomatoes and onions in my garden.",
+    "zh": "我在花园种了番茄和洋葱。"
+  },
+  "requirement": {
+    "en": "I'm not quite sure if we can meet your requirements.",
+    "zh": "我不太確定我們是否能夠滿足你的要求。"
+  },
+  "container": {
+    "en": "These containers are airtight.",
+    "zh": "這些容器是密封的。"
+  },
+  "brief": {
+    "en": "She glanced briefly at the newspaper.",
+    "zh": "她很快地瞟了一眼報紙。"
+  },
+  "destroy": {
+    "en": "Much of London was destroyed in the seventeenth century.",
+    "zh": "倫敦許多部份在十七世紀時被摧毀。"
+  },
+  "displease": {
+    "en": "If she was displeased, she never showed it.",
+    "zh": "如果她不高興, 她從來不表現出來。"
+  },
+  "depress": {
+    "en": "She sometimes gets depressed.",
+    "zh": "她偶爾有憂鬱的心情。"
+  },
+  "crack": {
+    "en": "I like cracking sunflower seeds with my teeth.",
+    "zh": "我喜欢嗑葵花籽。"
+  },
+  "thorough": {
+    "en": "Because Tom didn't thoroughly clean the pots, Mary got dysentery.",
+    "zh": "湯姆沒有徹底清洗鍋碗瓢盆，導致瑪莉得了痢疾。"
+  },
+  "mutter": {
+    "en": "I heard Tom muttering something in French.",
+    "zh": "我听到汤姆在用法语嘀咕些什么。"
+  },
+  "outskirt": {
+    "en": "I live on the outskirts of Tokyo.",
+    "zh": "我住在東京郊區。"
+  },
+  "brake": {
+    "en": "He crashed his car because someone tampered with the brakes.",
+    "zh": "他撞车是因为有人在刹车上做了手脚。"
+  },
+  "prescribe": {
+    "en": "The physician prescribed his patient some medicine.",
+    "zh": "医生给他的病人开了一些药。"
+  },
+  "cease": {
+    "en": "His behavior never ceases to surprise me.",
+    "zh": "他的所作所为总是让我惊讶。"
+  },
+  "profit": {
+    "en": "A wise man profits from his mistakes.",
+    "zh": "聰明人會從自己的錯誤中受益。"
+  },
+  "evaporate": {
+    "en": "Water evaporates when it is heated.",
+    "zh": "當水被加熱時，水汽蒸發。"
+  },
+  "stocking": {
+    "en": "I like wearing stockings.",
+    "zh": "我喜歡穿長襪。"
+  },
+  "wave": {
+    "en": "She waved her hand until the train was out of sight.",
+    "zh": "她挥着她的手，直到火车消失在视线之外。"
+  },
+  "spill": {
+    "en": "Tom admitted to spilling the red wine.",
+    "zh": "Tom承认了他摔了红酒。"
+  },
+  "float": {
+    "en": "The petals are floating on the water.",
+    "zh": "花瓣浮在水面上。"
+  },
+  "relate": {
+    "en": "Almost everyone in our village is related to one another.",
+    "zh": "我们村里所有的村民几乎彼此都是亲戚。"
+  },
+  "footstep": {
+    "en": "Tom wanted to follow in his father's footsteps.",
+    "zh": "汤姆想追随他父亲的脚步。"
+  },
+  "impress": {
+    "en": "We were deeply impressed by the lecturer's eloquent speech.",
+    "zh": "演讲者精彩的演说给我们留下了深刻的印象。"
+  },
+  "print": {
+    "en": "Please replace the empty ink cartridge in the printer.",
+    "zh": "请把打印机里面的空的墨粉鼓换掉。"
+  },
+  "pollute": {
+    "en": "Sewage often pollutes the ocean.",
+    "zh": "废水经常污染海洋。"
+  },
+  "hunt": {
+    "en": "Hemingway enjoyed big game hunting in Africa.",
+    "zh": "海明威喜歡在非洲的大狩獵。"
+  },
+  "slam": {
+    "en": "Tom slammed on the brakes and the car began to skid.",
+    "zh": "湯姆猛踩煞車，汽車開始打滑。"
+  },
+  "opera": {
+    "en": "My father has been in good shape since his operation.",
+    "zh": "自从手术后，我父亲一直处于良好的状态。"
+  },
+  "initial": {
+    "en": "What do the initials NTT stand for?",
+    "zh": "NTT這個縮寫是什麼意思？"
+  },
+  "mode": {
+    "en": "After winning the Nobel prize, she remained as modest as ever.",
+    "zh": "獲得諾貝爾獎後，她仍謙虛如昔。"
+  },
+  "approximate": {
+    "en": "Approximately thirty young people attended.",
+    "zh": "約有三十箇年輕人到了。"
+  },
+  "defect": {
+    "en": "This system has obvious defects.",
+    "zh": "這個系統有些明顯的缺陷。"
+  },
+  "dialect": {
+    "en": "I'm very interested in dialects.",
+    "zh": "我对方言很感兴趣。"
+  },
+  "drag": {
+    "en": "Tom dragged himself out of bed and put on his clothes.",
+    "zh": "汤姆从床上爬起来，穿上了衣服。"
+  },
+  "stain": {
+    "en": "Do you have anything to remove stains?",
+    "zh": "你有除锈的东西吗？"
+  },
+  "oblige": {
+    "en": "She was obliged to marry the old man.",
+    "zh": "她不得不和这个老男人结婚。"
+  },
+  "immigrant": {
+    "en": "Many of the immigrants changed their names.",
+    "zh": "许多移民改了名字。"
+  },
+  "punish": {
+    "en": "In some countries, the punishment for treason can be life in prison.",
+    "zh": "在一些國家，叛國罪的懲罰可以是終身監禁。"
   }
 }
