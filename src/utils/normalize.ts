@@ -1,6 +1,7 @@
 import type { NormalizedWord, WordExample, WordMeaning } from "../types";
 import { getTodayDate } from "./date";
 import { findCet4Word } from "../data/cet4Words";
+import wordExamples from "../data/wordExamples";
 
 export const EMPTY_EXAMPLE = "暂无可靠例句";
 export const EMPTY_TRANSLATION = "暂无可靠翻译";
@@ -51,6 +52,14 @@ function normalizeExamples(data: Record<string, unknown>): WordExample[] {
   return examples.length ? examples.slice(0, 2) : [{ en: EMPTY_EXAMPLE, zh: EMPTY_TRANSLATION, source: "none" }];
 }
 
+function overrideExamples(word: string, examples: WordExample[]): WordExample[] {
+  const first = examples[0];
+  if (!first || first.en !== EMPTY_EXAMPLE) return examples;
+  const local = wordExamples[word.toLowerCase()];
+  if (!local) return examples;
+  return [{ en: local.en, zh: local.zh, source: "local" }];
+}
+
 export function normalizeWordData(input: Record<string, unknown> | NormalizedWord): NormalizedWord {
   const rawWord = asText(input.word).toLowerCase();
   const local = rawWord ? findCet4Word(rawWord) : undefined;
@@ -91,7 +100,7 @@ export function normalizeWordData(input: Record<string, unknown> | NormalizedWor
     phoneticUK: asText(merged.phoneticUK) || asText(merged.ukphone) || asText(merged.phonetic),
     phoneticUS: asText(merged.phoneticUS) || asText(merged.usphone),
     meanings,
-    examples: normalizeExamples(merged),
+    examples: overrideExamples(word, normalizeExamples(merged)),
     isCET4: Boolean(merged.isCET4 ?? local?.isCET4 ?? false),
     isHighFrequency: Boolean(merged.isHighFrequency ?? local?.isHighFrequency ?? false),
     isKeyWord: Boolean(merged.isKeyWord ?? local?.isKeyWord ?? false),

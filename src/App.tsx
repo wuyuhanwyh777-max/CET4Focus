@@ -633,14 +633,14 @@ function LearnPage({ state, setState, favorites, onToggle, onDetail }: { state: 
           </button>
         </div>
         <WordTags word={word} />
+        <div className="button-row study-actions">
+          <button className="secondary danger" onClick={() => answer(false)}>不认识</button>
+          <button className="primary success" onClick={() => answer(true)}>认识了</button>
+          <button className="secondary" onClick={() => onDetail(word)}>详情</button>
+          <button className="secondary" onClick={skip}>跳过</button>
+        </div>
         <WordBody word={word} loading={isLoadingCurrent} />
       </article>
-      <div className="button-row learn-actions">
-        <button className="secondary danger" onClick={() => answer(false)}>不认识</button>
-        <button className="secondary" onClick={() => onDetail(word)}>详情</button>
-        <button className="secondary" onClick={skip}>跳过</button>
-        <button className="primary success" onClick={() => answer(true)}>认识了</button>
-      </div>
     </section>
   );
 }

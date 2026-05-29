@@ -573,11 +573,12 @@ h2 {
 }
 
 .learn-section { max-width: 780px; margin: 0 auto; padding-bottom: 60px; }
-.learn-actions {
-  display: flex; justify-content: center; gap: 10px;
+.learn-actions { display: none; }
+.study-actions {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
   margin-top: 18px; padding: 10px 0;
 }
-.learn-actions button { min-width: 100px; }
+.study-actions button { min-width: 100px; }
 .learn-top {
   display: flex;
   align-items: center;
@@ -1258,21 +1259,11 @@ h2 {
     background: rgba(37, 99, 235, 0.09);
   }
 
-  /* Mobile learn actions bar - fixed above bottom nav */
-  .learn-actions {
-    position: fixed;
-    bottom: calc(88px + env(safe-area-inset-bottom));
-    left: 12px; right: 12px; z-index: 45;
-    padding: 10px 8px;
-    border-radius: 20px;
-    background: #fff;
-    box-shadow: 0 -2px 16px rgba(0,0,0,0.06);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-  }
-  .learn-actions button { font-size: 15px; min-height: 44px; }
+  /* Mobile study actions - inside card, above detail content */
+  .study-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 0; }
+  .study-actions button { font-size: 15px; min-height: 44px; }
   .fixed-actions { display: none; }
-  .learn-section { padding-bottom: 170px; }
-  .study-card { padding-bottom: 0; }
+  .learn-section { padding-bottom: 140px; }
   .completion-card { padding-bottom: 120px; }
 }
 
