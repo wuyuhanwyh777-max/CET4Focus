@@ -77,30 +77,61 @@ async function fetchFreeDict(word) {
 }
 
 // Tatoeba: read from local TSV file
+// Supports two formats:
+//   Format A: eng<TAB>cmn  (2 columns)
+//   Format B: id<TAB>eng<TAB>...<TAB>cmn (4+ columns, official export)
 let tatoebaData = null;
+
+function isValidSentence(text, minLen, maxLen) {
+  if (!text || text.length < minLen || text.length > maxLen) return false;
+  // Skip lines with URLs, HTML, emails, garbled chars
+  if (/https?:|www\.|<[a-z/]|@\w+\.com|█|�/.test(text)) return false;
+  return true;
+}
+
 function loadTatoeba() {
   if (tatoebaData) return tatoebaData;
   const path = resolve(ROOT, "data/tatoeba-eng-cmn.tsv");
   if (!existsSync(path)) {
-    console.log("Tatoeba file not found at data/tatoeba-eng-cmn.tsv — skipping");
+    console.log("⚠ Tatoeba file not found at data/tatoeba-eng-cmn.tsv — skipping");
+    console.log("  Download from https://tatoeba.org/en/downloads or use a custom TSV with columns: eng<TAB>cmn");
     tatoebaData = [];
     return tatoebaData;
   }
   console.log("Loading Tatoeba data...");
   const raw = readFileSync(path, "utf8");
-  const lines = raw.split("\n");
+  const lines = raw.split(/\r?\n/);
   tatoebaData = [];
-  for (const line of lines) {
+  let skipped = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    // Skip header rows
+    if (i === 0 && /^(id|sentence|eng|cmn|lang)/i.test(line)) continue;
     const parts = line.split("\t");
-    if (parts.length >= 4) {
-      const eng = parts[1]?.trim();
-      const cmn = parts[3]?.trim();
-      if (eng && cmn && eng.length > 15 && eng.length < 200) {
-        tatoebaData.push({ en: eng, zh: cmn });
+    let eng, cmn;
+    if (parts.length === 2) {
+      // Format A: eng<TAB>cmn
+      eng = parts[0].trim();
+      cmn = parts[1].trim();
+    } else if (parts.length >= 4) {
+      // Format B: id<TAB>eng_lang<TAB>eng<TAB>id2<TAB>cmn_lang<TAB>cmn
+      // Find first plausible English text (has Latin chars) and first Chinese text (has CJK chars)
+      for (const p of parts) {
+        const t = p.trim();
+        if (!eng && /[a-zA-Z]/.test(t) && /[a-zA-Z]{3,}/.test(t)) eng = t;
+        else if (eng && /[一-鿿]/.test(t)) { cmn = t; break; }
       }
+    } else {
+      continue;
     }
+    if (!isValidSentence(eng, 10, 250)) { skipped++; continue; }
+    if (!isValidSentence(cmn, 2, 120)) { skipped++; continue; }
+    // Must contain CJK characters for Chinese
+    if (!/[一-鿿]/.test(cmn)) { skipped++; continue; }
+    tatoebaData.push({ en: eng, zh: cmn });
   }
-  console.log(`Tatoeba: loaded ${tatoebaData.length} sentence pairs`);
+  console.log(`Tatoeba: loaded ${tatoebaData.length} sentence pairs (skipped ${skipped} invalid)`);
   return tatoebaData;
 }
 
@@ -108,12 +139,18 @@ function fetchTatoeba(word) {
   const data = loadTatoeba();
   if (!data.length) return null;
   const lower = word.toLowerCase();
-  const re = new RegExp(`\\b${lower.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
-  const matches = data.filter((item) => re.test(item.en));
-  if (!matches.length) return null;
-  // Pick a suitable one — prefer medium-length sentences
-  const sorted = matches.sort((a, b) => Math.abs(a.en.length - 80) - Math.abs(b.en.length - 80));
-  return { en: sorted[0].en, zh: sorted[0].zh, source: "tatoeba" };
+  // Strict word-boundary match
+  const escaped = lower.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`(?<![a-zA-Z])${escaped}(?![a-zA-Z])`, "i");
+  const candidates = data.filter((item) =>
+    re.test(item.en) &&
+    item.en.length >= 25 && item.en.length <= 140 &&
+    item.zh.length >= 4 && item.zh.length <= 80
+  );
+  if (!candidates.length) return null;
+  // Pick best: prefer sentences with balanced length near 60 chars
+  candidates.sort((a, b) => Math.abs(a.en.length - 60) - Math.abs(b.en.length - 60));
+  return { en: candidates[0].en, zh: candidates[0].zh, source: "tatoeba" };
 }
 
 // ================ Main loop ================
