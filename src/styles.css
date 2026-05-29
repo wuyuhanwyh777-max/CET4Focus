@@ -462,7 +462,7 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   color: #4b5563;
   font-size: 14px;
 }
@@ -472,8 +472,8 @@ h2 {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px 14px;
-  margin-bottom: 8px;
+  gap: 8px 12px;
+  margin-bottom: 4px;
 }
 
 .study-pronounce .phonetics {
@@ -642,7 +642,7 @@ h2 {
   position: relative;
   max-width: 780px;
   margin: 0 auto 18px;
-  padding: clamp(24px, 5vw, 42px);
+  padding: clamp(18px, 4vw, 36px);
   overflow: hidden;
   transition: transform 0.35s var(--spring-smooth), opacity 0.25s var(--spring-fast);
   animation: cardIn 0.5s var(--spring-smooth) both;
@@ -651,6 +651,8 @@ h2 {
 .study-card {
   text-align: center;
 }
+
+.study-card h1 { margin-bottom: 4px; }
 
 .sync-pill {
   display: inline-flex;
@@ -733,7 +735,7 @@ h2 {
 
 .word-body {
   display: grid;
-  gap: 14px;
+  gap: 10px;
   margin-top: 18px;
   text-align: left;
 }
