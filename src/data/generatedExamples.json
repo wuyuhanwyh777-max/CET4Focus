@@ -222,5 +222,217 @@
   "tide": {
     "en": "The doctor's no good this tide.",
     "zh": ""
+  },
+  "superior": {
+    "en": "Rebecca had always thought shorts were far superior to pants, as they didn't constantly make her legs itch.",
+    "zh": ""
+  },
+  "matter": {
+    "en": "What's the matter?;   state matters",
+    "zh": ""
+  },
+  "grant": {
+    "en": "I got a grant from the government to study archeology in Egypt.",
+    "zh": ""
+  },
+  "observe": {
+    "en": "From this vantage point we can observe the behavior of the animals in their natural habitat.",
+    "zh": ""
+  },
+  "institute": {
+    "en": "I work in a medical research institute.",
+    "zh": ""
+  },
+  "awful": {
+    "en": "My socks smell awful.",
+    "zh": ""
+  },
+  "emergency": {
+    "en": "Cardiac arrest is an emergency and if you find someone in cardiac arrest you should call 999 immediately.",
+    "zh": ""
+  },
+  "stress": {
+    "en": "Go easy on him, he's been under a lot of stress lately.",
+    "zh": ""
+  },
+  "launch": {
+    "en": "The navy launched another ship.",
+    "zh": ""
+  },
+  "suppose": {
+    "en": "Suppose that A implies B and B implies C. Then A implies C.",
+    "zh": ""
+  },
+  "remove": {
+    "en": "He removed the marbles from the bag.",
+    "zh": ""
+  },
+  "promote": {
+    "en": "He promoted his clerk to office manager.",
+    "zh": ""
+  },
+  "uncertain": {
+    "en": "Tomorrow's weather is uncertain.",
+    "zh": ""
+  },
+  "slave": {
+    "en": "a slave to passion, to strong drink, or to ambition",
+    "zh": ""
+  },
+  "mature": {
+    "en": "She is quite mature for her age.",
+    "zh": ""
+  },
+  "threaten": {
+    "en": "He threatened me with a knife.",
+    "zh": ""
+  },
+  "renew": {
+    "en": "I'd like to renew these three books.  Did you know that you can renew online?",
+    "zh": ""
+  },
+  "takeoff": {
+    "en": "The flight was smooth, but the takeoff was a little rough.",
+    "zh": ""
+  },
+  "innocent": {
+    "en": "The slaughter of the innocents was a significant event in the New Testament.",
+    "zh": ""
+  },
+  "dropout": {
+    "en": "The politicians of the world are mere political university dropouts.",
+    "zh": ""
+  },
+  "replace": {
+    "en": "When you've finished using the telephone, please replace the handset.",
+    "zh": ""
+  },
+  "sightseeing": {
+    "en": "Sightseeing is a frequent reason to visit San Francisco.",
+    "zh": ""
+  },
+  "honor": {
+    "en": "The crowds gave the returning general much honor and praise.",
+    "zh": ""
+  },
+  "personality": {
+    "en": "The president has a unique personality.",
+    "zh": ""
+  },
+  "sensitive": {
+    "en": "Max is very sensitive; he cried today because of the bad news.",
+    "zh": ""
+  },
+  "sway": {
+    "en": "The old song caused a little sway in everyone in the room.",
+    "zh": ""
+  },
+  "technical": {
+    "en": "The performance showed technical virtuosity, but lacked inspiration.",
+    "zh": ""
+  },
+  "harm": {
+    "en": "No harm came to my possessions.",
+    "zh": ""
+  },
+  "imaginary": {
+    "en": "Santa Claus is imaginary.",
+    "zh": ""
+  },
+  "contaminate": {
+    "en": "This water is contaminated. It isn't safe to drink.",
+    "zh": ""
+  },
+  "soar": {
+    "en": "The pump prices soared into new heights as the strike continued.",
+    "zh": ""
+  },
+  "solely": {
+    "en": "The new chef was solely responsible for attending the grill.",
+    "zh": ""
+  },
+  "tremendous": {
+    "en": "Van Beethoven's ninth symphony is a tremendous piece of music.",
+    "zh": ""
+  },
+  "civilization": {
+    "en": "Modern civilization is a product of industrialization and globalization.",
+    "zh": ""
+  },
+  "tough": {
+    "en": "They were doing fine until they encountered a bunch of toughs from the opposition.",
+    "zh": ""
+  },
+  "gift": {
+    "en": "She had a gift for playing the flute.",
+    "zh": ""
+  },
+  "scale": {
+    "en": "Please rate your experience on a scale from 1 to 10.",
+    "zh": ""
+  },
+  "embrace": {
+    "en": "I wholeheartedly embrace the new legislation.",
+    "zh": ""
+  },
+  "seldom": {
+    "en": "They seldom come here now.",
+    "zh": ""
+  },
+  "performance": {
+    "en": "the performance of an undertaking or a duty",
+    "zh": ""
+  },
+  "violate": {
+    "en": "Accessing unauthorized files violates security protocol.",
+    "zh": ""
+  },
+  "privacy": {
+    "en": "I need my privacy, so please stay out of my room.",
+    "zh": ""
+  },
+  "choke": {
+    "en": "Ever since he choked on a bone, he has refused to eat fish.",
+    "zh": ""
+  },
+  "capable": {
+    "en": "As everyone knew, he was capable of violence when roused.",
+    "zh": ""
+  },
+  "careless": {
+    "en": "Jessica was so careless that she put her shorts on backwards.",
+    "zh": ""
+  },
+  "hit": {
+    "en": "The hit was very slight.",
+    "zh": ""
+  },
+  "swallow": {
+    "en": "He took the aspirin with a single swallow of water.",
+    "zh": ""
+  },
+  "distance": {
+    "en": "From Moscow, the distance is relatively short to Saint Petersburg, relatively long to Novosibirsk, but even greater to Vladivostok.",
+    "zh": ""
+  },
+  "submit": {
+    "en": "They will not submit to the destruction of their rights.",
+    "zh": ""
+  },
+  "critical": {
+    "en": "A good teacher is fair but critical.",
+    "zh": ""
+  },
+  "transaction": {
+    "en": "The transaction was made on Friday with the supplier.",
+    "zh": ""
+  },
+  "via": {
+    "en": "They drove from New York to Los Angeles via Omaha.",
+    "zh": ""
+  },
+  "insist": {
+    "en": "I insist that my secretary dresses nicely.",
+    "zh": ""
   }
 }
