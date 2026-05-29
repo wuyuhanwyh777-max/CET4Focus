@@ -5,12 +5,31 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 
+// Load .env.local
+try {
+  const envPath = resolve(ROOT, ".env.local");
+  if (existsSync(envPath)) {
+    const envContent = readFileSync(envPath, "utf8");
+    for (const line of envContent.split(/\r?\n/)) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const eqIdx = trimmed.indexOf("=");
+      if (eqIdx > 0) {
+        const key = trimmed.slice(0, eqIdx).trim();
+        const val = trimmed.slice(eqIdx + 1).trim();
+        if (!process.env[key]) process.env[key] = val;
+      }
+    }
+  }
+} catch { /* no .env.local */ }
+
 // Parse args
 const args = process.argv.slice(2);
 let limit = 100;
 let doAll = false;
 let provider = "all";
 let reportMissing = false;
+let importManualMode = false;
 
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
@@ -20,7 +39,15 @@ for (let i = 0; i < args.length; i++) {
   else if (a === "--provider" && args[i + 1]) { provider = args[i + 1]; i++; }
   else if (a.startsWith("--provider=")) { provider = a.split("=")[1]; }
   else if (a === "--report-missing") reportMissing = true;
-  else if (a === "--import-manual") importManual();
+  else if (a === "--import-manual") importManualMode = true;
+}
+
+// Warn about missing API keys
+if (provider === "mw" || provider === "all") {
+  if (!process.env.MW_API_KEY) console.log("ℹ MW_API_KEY not set — Merriam-Webster provider will be skipped");
+}
+if (provider === "oxford" || provider === "all") {
+  if (!process.env.OXFORD_APP_ID || !process.env.OXFORD_APP_KEY) console.log("ℹ OXFORD_APP_ID/OXFORD_APP_KEY not set — Oxford provider will be skipped");
 }
 
 // Load word list
@@ -87,6 +114,9 @@ if (reportMissing) {
   console.log(`Written ${sorted.length} missing words to data/missingExamples.txt and data/missingExamples.json`);
   process.exit(0);
 }
+
+// Deferred import-manual (after generated is loaded)
+if (importManualMode) importManual();
 
 const toProcess = doAll ? missing : missing.slice(0, limit);
 console.log(`Processing: ${toProcess.length} words (limit=${limit}, provider=${provider})\n`);
@@ -301,6 +331,7 @@ function importManual() {
   const data = JSON.parse(readFileSync(path, "utf8"));
   let imported = 0;
   for (const [word, ex] of Object.entries(data)) {
+    if (word === "_instructions" || word === "example") { console.log(`SKIP ${word}: meta entry`); continue; }
     const en = (ex.exampleEn || "").trim();
     const cn = (ex.exampleCn || "").trim();
     if (!en || !cn) { console.log(`SKIP ${word}: empty fields`); continue; }
