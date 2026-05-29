@@ -92,48 +92,6 @@ async function fetchChineseMeaning(word: string): Promise<string> {
   }
 }
 
-type MWData = { definitionEn: string; exampleEn: string; partOfSpeech: string };
-
-async function fetchMerriamWebster(word: string): Promise<MWData | null> {
-  try {
-    const r = await fetchWithTimeout(`/api/mw-dictionary?word=${encodeURIComponent(word)}`, 5000);
-    if (!r.ok) return null;
-    const data = await r.json();
-    if (!Array.isArray(data) || data.length === 0) return null;
-    const entry = data[0];
-    if (typeof entry === "string") return null; // suggestion string, not a definition
-    const headword = entry.hwi?.hw || "";
-    const pos = entry.fl || "";
-    const shortdef = Array.isArray(entry.shortdef) ? entry.shortdef.join("; ") : "";
-    let exampleEn = "";
-    if (Array.isArray(entry.def)) {
-      for (const def of entry.def) {
-        if (Array.isArray(entry.dros)) {
-          for (const dro of entry.dros) {
-            if (dro.drp === "vis" && Array.isArray(dro.def)) {
-              for (const d of dro.def) {
-                if (Array.isArray(d.dt)) {
-                  const vis = d.dt.find((item: any) => item[0] === "vis");
-                  if (vis && Array.isArray(vis[1]) && vis[1].length > 0) {
-                    const t = vis[1][0].t || "";
-                    if (t && t.includes(headword) && t.length > 20) { exampleEn = t; break; }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    if (shortdef || exampleEn) {
-      return { definitionEn: shortdef, exampleEn, partOfSpeech: pos };
-    }
-    return null;
-  } catch {
-    return null;
-  }
-}
-
 export async function fetchOnlineDictionary(word: string): Promise<NormalizedWord> {
   const key = word.trim().toLowerCase();
   const cache = readCache();
@@ -143,10 +101,9 @@ export async function fetchOnlineDictionary(word: string): Promise<NormalizedWor
   }
 
   const local = findCet4Word(key);
-  const [youdaoZh, bingData, mwData] = await Promise.all([
+  const [youdaoZh, bingData] = await Promise.all([
     fetchChineseMeaning(key),
     fetchBingDict(key),
-    fetchMerriamWebster(key),
   ]);
 
   const bestZh = local?.meanings[0]?.definitionZh || youdaoZh || bingData?.definitionZh || "";
@@ -154,32 +111,25 @@ export async function fetchOnlineDictionary(word: string): Promise<NormalizedWor
     throw new Error("未找到这个词的中文释义，请检查拼写。");
   }
 
-  const definitionEn = mwData?.definitionEn || "";
-  const mwExample = mwData?.exampleEn ? { en: mwData.exampleEn, zh: "", source: "merriam-webster" as const } : null;
-
   const meanings: WordMeaning[] = [
     {
-      partOfSpeech: local?.meanings[0]?.partOfSpeech || mwData?.partOfSpeech || bingData?.partOfSpeech || "",
-      definitionEn,
+      partOfSpeech: local?.meanings[0]?.partOfSpeech || bingData?.partOfSpeech || "",
+      definitionEn: "",
       definitionZh: bestZh,
     },
   ];
-  const examples = mwExample
-    ? [mwExample]
-    : [{ en: EMPTY_EXAMPLE, zh: EMPTY_TRANSLATION, source: "none" as const }];
-
   const normalized = normalizeWordData({
     ...(local || {}),
     word: key,
     meanings,
-    examples,
+    examples: [{ en: EMPTY_EXAMPLE, zh: EMPTY_TRANSLATION, source: "none" as const }],
     phoneticUK: bingData?.phoneticUK || local?.phoneticUK || "",
     phoneticUS: bingData?.phoneticUS || local?.phoneticUS || "",
-    source: mwData ? "merriam-webster" : local ? "local" : "online",
+    source: local ? "local" : "online",
     isCET4: Boolean(local),
   });
 
-  cache[key] = { word: key, data: normalized, source: mwData ? "merriam-webster" : "youdao+bing", cachedAt: new Date().toISOString() };
+  cache[key] = { word: key, data: normalized, source: "youdao+bing", cachedAt: new Date().toISOString() };
   writeCache(cache);
   return normalized;
 }

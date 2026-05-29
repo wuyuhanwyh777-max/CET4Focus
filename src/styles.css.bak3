@@ -1281,20 +1281,19 @@ h2 {
   /* Mobile learn actions bar */
   .learn-actions {
     position: fixed;
-    bottom: calc(90px + env(safe-area-inset-bottom));
+    bottom: calc(72px + env(safe-area-inset-bottom));
     left: 12px; right: 12px; z-index: 45;
-    padding: 10px 8px;
+    padding: 10px 10px;
     border-radius: 20px;
     background: #fff;
     box-shadow: 0 -2px 16px rgba(0,0,0,0.06);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    display: flex; justify-content: center; gap: 8px;
   }
-  .learn-actions button { font-size: 15px; min-height: 44px; }
+  .learn-actions button { flex: 1; min-width: 0; font-size: 14px; padding: 0 8px; }
   .fixed-actions { display: none; }
-  .learn-section { padding-bottom: 160px; }
+  .learn-section { padding-bottom: 120px; }
   .study-card { padding-bottom: 0; }
   .completion-card { padding-bottom: 120px; }
-  .learn-top { margin-bottom: 14px; }
 }
 
 /* ===== Fixed modal/picker layer: no blur, no black glass ===== */
