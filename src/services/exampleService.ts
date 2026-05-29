@@ -1,13 +1,15 @@
 import wordExamples from "../data/wordExamples";
 import generatedExamplesData from "../data/generatedExamples.json";
+import completionExamplesData from "../data/completionExamples.json";
 
 type ExampleResult = {
   exampleEn: string;
   exampleCn: string;
-  source: "manual" | "generated" | "local" | "online" | "none";
+  source: "manual" | "generated" | "completion" | "local" | "online" | "none";
 };
 
 const generatedExamples: Record<string, { en: string; zh: string }> = generatedExamplesData;
+const completionExamples: Record<string, { exampleEn: string; exampleCn: string }> = completionExamplesData;
 
 export function getBestExample(word: string): ExampleResult {
   const key = word.toLowerCase().trim();
@@ -22,11 +24,16 @@ export function getBestExample(word: string): ExampleResult {
     return { exampleEn: generatedExamples[key].en, exampleCn: generatedExamples[key].zh, source: "generated" };
   }
 
-  // 3. Fallback: no reliable example
+  // 3. Completion examples (local fill-in)
+  if (completionExamples[key]) {
+    return { exampleEn: completionExamples[key].exampleEn, exampleCn: completionExamples[key].exampleCn, source: "completion" };
+  }
+
+  // 4. Fallback: no reliable example
   return { exampleEn: "", exampleCn: "", source: "none" };
 }
 
 export function hasExample(word: string): boolean {
   const key = word.toLowerCase().trim();
-  return !!(wordExamples[key] || generatedExamples[key]);
+  return !!(wordExamples[key] || generatedExamples[key] || completionExamples[key]);
 }

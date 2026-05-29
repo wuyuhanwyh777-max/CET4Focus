@@ -1,5 +1,5 @@
 export type MasteryStatus = "未掌握" | "学习中" | "已掌握";
-export type ExampleSource = "online" | "local" | "none" | "manual" | "generated" | "tatoeba";
+export type ExampleSource = "online" | "local" | "none" | "manual" | "generated" | "tatoeba" | "completion";
 
 export interface WordMeaning {
   partOfSpeech: string;
