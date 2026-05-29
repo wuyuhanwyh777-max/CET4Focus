@@ -504,7 +504,7 @@ function LearnPage({ state, setState, favorites, onToggle, onDetail }: { state: 
   const [onlineWords, setOnlineWords] = useState<Record<string, NormalizedWord>>({});
   const [loadingWord, setLoadingWord] = useState("");
   const rawQueue = state.progress?.queue.length ? state.progress.queue : buildDailyQueue(state.settings.dailyGoal, favorites);
-  const queue = state.progress?.queue.length ? rawQueue.filter((word) => !favorites[word]) : rawQueue;
+  const queue = rawQueue;
   const index = state.progress?.index || 0;
   const completed = queue.length === 0 || index >= queue.length;
   const currentWordId = completed ? "" : queue[index];
@@ -621,7 +621,7 @@ function LearnPage({ state, setState, favorites, onToggle, onDetail }: { state: 
       </div>
       <article className={`study-card ${direction ? `slide-${direction}` : ""}`}>
         {direction && <div className={`feedback-flash ${direction === "right" ? "known" : "unknown"}`}>{direction === "right" ? "✓" : "✗"}</div>}
-        <button className="corner-star-btn" onClick={(e) => { e.stopPropagation(); onToggle(word); }} title={favorites[word.word] ? "取消收藏" : "收藏"}>
+        <button type="button" className="corner-star-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggle(word); }} title={favorites[word.word] ? "取消收藏" : "收藏"}>
           <Star size={22} fill={favorites[word.word] ? "#fbbf24" : "none"} color={favorites[word.word] ? "#fbbf24" : "#9ca3af"} />
         </button>
         <div className={`sync-pill ${isLoadingCurrent ? "loading" : "ready"}`}>{isLoadingCurrent ? "正在补全词典数据" : "词典数据已同步"}</div>
