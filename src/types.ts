@@ -1,5 +1,5 @@
 export type MasteryStatus = "未掌握" | "学习中" | "已掌握";
-export type ExampleSource = "online" | "local" | "none";
+export type ExampleSource = "online" | "local" | "none" | "manual" | "generated";
 
 export interface WordMeaning {
   partOfSpeech: string;
@@ -30,7 +30,7 @@ export interface NormalizedWord {
   reviewCount: number;
   wrongCount: number;
   masteryStatus: MasteryStatus;
-  source?: "online" | "local" | "cache" | "none";
+  source?: "online" | "local" | "cache" | "none" | "manual" | "generated";
 }
 
 export interface StudyLog {

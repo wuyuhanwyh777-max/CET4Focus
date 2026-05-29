@@ -7,7 +7,8 @@
     "dev": "vite --host 127.0.0.1",
     "dev:host": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
-    "preview": "vite preview --host 127.0.0.1"
+    "preview": "vite preview --host 127.0.0.1",
+    "fill:examples": "node scripts/fillExamples.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",

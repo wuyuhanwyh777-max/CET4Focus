@@ -1,7 +1,7 @@
 import type { NormalizedWord, WordExample, WordMeaning } from "../types";
 import { getTodayDate } from "./date";
 import { findCet4Word } from "../data/cet4Words";
-import wordExamples from "../data/wordExamples";
+import { getBestExample } from "../services/exampleService";
 
 export const EMPTY_EXAMPLE = "暂无可靠例句";
 export const EMPTY_TRANSLATION = "暂无可靠翻译";
@@ -55,9 +55,9 @@ function normalizeExamples(data: Record<string, unknown>): WordExample[] {
 function overrideExamples(word: string, examples: WordExample[]): WordExample[] {
   const first = examples[0];
   if (!first || first.en !== EMPTY_EXAMPLE) return examples;
-  const local = wordExamples[word.toLowerCase()];
-  if (!local) return examples;
-  return [{ en: local.en, zh: local.zh, source: "local" }];
+  const best = getBestExample(word);
+  if (best.source === "none") return examples;
+  return [{ en: best.exampleEn, zh: best.exampleCn, source: best.source }];
 }
 
 export function normalizeWordData(input: Record<string, unknown> | NormalizedWord): NormalizedWord {
