@@ -143,9 +143,12 @@ function WordBody({ word, loading = false }: { word: NormalizedWord; loading?: b
   return (
     <div className="word-body">
       <div>
-        <b>词性</b> {meaning.partOfSpeech || "暂无"}
-        <span style={{display:"inline-block",width:12}} />
-        <b>中文意思</b> {meaning.definitionZh}
+        <b>词性</b>
+        <p>{meaning.partOfSpeech || "暂无"}</p>
+      </div>
+      <div>
+        <b>中文意思</b>
+        <p>{meaning.definitionZh}</p>
       </div>
       <div>
         <b>例句</b>
