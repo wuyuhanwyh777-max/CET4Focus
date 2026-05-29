@@ -20,6 +20,7 @@ for (let i = 0; i < args.length; i++) {
   else if (a === "--provider" && args[i + 1]) { provider = args[i + 1]; i++; }
   else if (a.startsWith("--provider=")) { provider = a.split("=")[1]; }
   else if (a === "--report-missing") reportMissing = true;
+  else if (a === "--import-manual") importManual();
 }
 
 // Load word list
@@ -54,11 +55,36 @@ console.log(`Manual: ${manualKeys.size}, Generated: ${beforeCount}`);
 const missing = allArr.filter((w) => !manualKeys.has(w) && !generated[w]);
 console.log(`Missing: ${missing.length}`);
 
-// --report-missing: output missing word list and exit
+// --report-missing: output missing word list (txt + json) and exit
 if (reportMissing) {
-  const outPath = resolve(ROOT, "data/missingExamples.txt");
-  writeFileSync(outPath, missing.join("\n"), "utf8");
-  console.log(`\nWritten ${missing.length} missing words to data/missingExamples.txt`);
+  const txtPath = resolve(ROOT, "data/missingExamples.txt");
+  const jsonPath = resolve(ROOT, "data/missingExamples.json");
+  // Load CET-4 word data for priority sorting
+  const wordDataMap = new Map();
+  const wdRe = /w\("([^"]+)",\s*"([^"]*)",\s*"([^"]*)",[^,]*,?\s*(true|false),\s*(true|false)/g;
+  let wm;
+  while ((wm = wdRe.exec(cet4Content)) !== null) {
+    wordDataMap.set(wm[1].toLowerCase(), { pos: wm[2], zh: wm[3], high: wm[4] === "true", key: wm[5] === "true" });
+  }
+  // Sort: high freq + key first, then by letter
+  const sorted = [...missing].sort((a, b) => {
+    const da = wordDataMap.get(a);
+    const db = wordDataMap.get(b);
+    const sa = (da?.high ? 2 : 0) + (da?.key ? 1 : 0);
+    const sb = (db?.high ? 2 : 0) + (db?.key ? 1 : 0);
+    if (sa !== sb) return sb - sa;
+    return a.localeCompare(b);
+  });
+  writeFileSync(txtPath, sorted.join("\n"), "utf8");
+  // Group by first letter for JSON
+  const grouped = {};
+  for (const w of sorted) {
+    const l = /^[a-z]/i.test(w) ? w[0].toUpperCase() : "#";
+    if (!grouped[l]) grouped[l] = [];
+    grouped[l].push(w);
+  }
+  writeFileSync(jsonPath, JSON.stringify({ total: sorted.length, byLetter: grouped }, null, 2), "utf8");
+  console.log(`Written ${sorted.length} missing words to data/missingExamples.txt and data/missingExamples.json`);
   process.exit(0);
 }
 
@@ -201,6 +227,93 @@ function fetchTatoeba(word) {
 let added = 0;
 let skipped = 0;
 let failed = 0;
+// ================ Oxford provider ================
+async function fetchOxford(word) {
+  const appId = process.env.OXFORD_APP_ID;
+  const appKey = process.env.OXFORD_APP_KEY;
+  if (!appId || !appKey) return null;
+  try {
+    const r = await fetch(`https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/${encodeURIComponent(word)}`, {
+      headers: { app_id: appId, app_key: appKey },
+    });
+    if (!r.ok) return null;
+    const data = await r.json();
+    for (const result of data.results || []) {
+      for (const lex of result.lexicalEntries || []) {
+        for (const entry of lex.entries || []) {
+          for (const sense of entry.senses || []) {
+            for (const ex of sense.examples || []) {
+              const txt = ex.text || "";
+              if (txt.length > 20 && txt.toLowerCase().includes(word.toLowerCase())) {
+                return { en: txt, source: "oxford" };
+              }
+            }
+          }
+        }
+      }
+    }
+    return null;
+  } catch { return null; }
+}
+
+// ================ Merriam-Webster provider ================
+async function fetchMW(word) {
+  const apiKey = process.env.MW_API_KEY;
+  if (!apiKey) return null;
+  try {
+    const r = await fetch(`https://www.dictionaryapi.com/api/v3/references/learners/json/${encodeURIComponent(word)}?key=${apiKey}`);
+    if (!r.ok) return null;
+    const data = await r.json();
+    if (!Array.isArray(data) || data.length === 0 || typeof data[0] === "string") return null;
+    const entry = data[0];
+    if (Array.isArray(entry.def)) {
+      for (const def of entry.def) {
+        if (Array.isArray(def.sseq)) {
+          for (const sseq of def.sseq) {
+            if (Array.isArray(sseq)) {
+              for (const item of sseq) {
+                if (item[0] === "sense" && item[1]?.dt) {
+                  for (const dt of item[1].dt) {
+                    if (dt[0] === "vis" && Array.isArray(dt[1])) {
+                      for (const vis of dt[1]) {
+                        const t = (vis.t || "").replace(/\{[^}]*\}/g, "").trim();
+                        if (t.length > 20 && t.toLowerCase().includes(word.toLowerCase())) {
+                          return { en: t, source: "merriam-webster" };
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return null;
+  } catch { return null; }
+}
+
+// ================ Import manual ================
+function importManual() {
+  const path = resolve(ROOT, "data/manualExamplesTemplate.json");
+  if (!existsSync(path)) { console.log("data/manualExamplesTemplate.json not found"); process.exit(0); }
+  const data = JSON.parse(readFileSync(path, "utf8"));
+  let imported = 0;
+  for (const [word, ex] of Object.entries(data)) {
+    const en = (ex.exampleEn || "").trim();
+    const cn = (ex.exampleCn || "").trim();
+    if (!en || !cn) { console.log(`SKIP ${word}: empty fields`); continue; }
+    if (!en.toLowerCase().includes(word.toLowerCase())) { console.log(`SKIP ${word}: example missing target word`); continue; }
+    generated[word.toLowerCase()] = { en, zh: cn };
+    writeFileSync(generatedPath, JSON.stringify(generated, null, 2), "utf8");
+    imported++;
+    console.log(`IMPORTED ${word}`);
+  }
+  console.log(`\nImported ${imported} entries from manualExamplesTemplate.json`);
+  process.exit(0);
+}
+
 const providers = provider === "all"
   ? ["free", "tatoeba"]
   : [provider];
@@ -210,6 +323,8 @@ async function tryAll(word) {
     let result = null;
     if (p === "free") result = await fetchFreeDict(word);
     else if (p === "tatoeba") result = fetchTatoeba(word);
+    else if (p === "mw") result = await fetchMW(word);
+    else if (p === "oxford") result = await fetchOxford(word);
     if (result && result.en && result.en.length > 15 && result.en.toLowerCase().includes(word.toLowerCase())) {
       return result;
     }

@@ -1,0 +1,8 @@
+{
+  "_instructions": "Fill in exampleEn and exampleCn for each word. Run: node scripts/fillExamples.mjs --import-manual",
+  "example": {
+    "exampleEn": "We need an example sentence containing the word example.",
+    "exampleCn": "我们需要一个包含example这个词的例句。",
+    "source": "manual-review"
+  }
+}
