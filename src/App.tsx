@@ -621,7 +621,9 @@ function LearnPage({ state, setState, favorites, onToggle, onDetail }: { state: 
       </div>
       <article className={`study-card ${direction ? `slide-${direction}` : ""}`}>
         {direction && <div className={`feedback-flash ${direction === "right" ? "known" : "unknown"}`}>{direction === "right" ? "✓" : "✗"}</div>}
-        <Star className="corner-star" size={22} />
+        <button className="corner-star-btn" onClick={() => onToggle(word)} title={favorites[word.word] ? "取消收藏" : "收藏"}>
+          <Star size={22} fill={favorites[word.word] ? "#fbbf24" : "none"} color={favorites[word.word] ? "#fbbf24" : "#9ca3af"} />
+        </button>
         <div className={`sync-pill ${isLoadingCurrent ? "loading" : "ready"}`}>{isLoadingCurrent ? "正在补全词典数据" : "词典数据已同步"}</div>
         <h1>{word.word}</h1>
         <div className="study-pronounce">
@@ -632,13 +634,13 @@ function LearnPage({ state, setState, favorites, onToggle, onDetail }: { state: 
         </div>
         <WordTags word={word} />
         <WordBody word={word} loading={isLoadingCurrent} />
-        <div className="button-row fixed-actions">
-          <button className="secondary danger" onClick={() => answer(false)}>不认识</button>
-          <button className="secondary" onClick={() => onDetail(word)}>详情</button>
-          <button className="secondary" onClick={skip}>跳过</button>
-          <button className="primary success" onClick={() => answer(true)}>认识了</button>
-        </div>
       </article>
+      <div className="button-row learn-actions">
+        <button className="secondary danger" onClick={() => answer(false)}>不认识</button>
+        <button className="secondary" onClick={() => onDetail(word)}>详情</button>
+        <button className="secondary" onClick={skip}>跳过</button>
+        <button className="primary success" onClick={() => answer(true)}>认识了</button>
+      </div>
     </section>
   );
 }
@@ -791,8 +793,8 @@ function CompactCard({ word, favorite, onToggle, onDetail }: {
       </div>
       <p className="compact-meaning">{word.meanings[0]?.definitionZh || ""}</p>
       {(word.phoneticUK || word.phoneticUS) && <span className="compact-phonetic">/{word.phoneticUK || word.phoneticUS}/</span>}
-      <button className="compact-fav" onClick={(e) => { e.stopPropagation(); onToggle(word); }}>
-        {favorite ? "★" : "☆"}
+      <button className="compact-fav" onClick={(e) => { e.stopPropagation(); onToggle(word); }} title={favorite ? "取消收藏" : "收藏"}>
+        <Star size={16} fill={favorite ? "#fbbf24" : "none"} color={favorite ? "#fbbf24" : "#9ca3af"} />
       </button>
     </article>
   );
