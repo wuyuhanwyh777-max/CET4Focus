@@ -151,10 +151,6 @@ function WordBody({ word, loading = false }: { word: NormalizedWord; loading?: b
         <p>{meaning.definitionZh}</p>
       </div>
       <div>
-        <b>英文释义</b>
-        <p>{meaning.definitionEn || "暂无可靠英文释义"}</p>
-      </div>
-      <div>
         <b>例句</b>
         <p>英文：{isWaitingExample ? "正在加载可靠例句..." : example.en || EMPTY_EXAMPLE}</p>
         <p>中文：{isWaitingExample ? "正在加载可靠翻译..." : example.zh || EMPTY_TRANSLATION}</p>
@@ -633,13 +629,11 @@ function LearnPage({ state, setState, favorites, onToggle, onDetail }: { state: 
           </button>
         </div>
         <WordTags word={word} />
+        <WordBody word={word} loading={isLoadingCurrent} />
         <div className="button-row study-actions">
           <button className="secondary danger" onClick={() => answer(false)}>不认识</button>
           <button className="primary success" onClick={() => answer(true)}>认识了</button>
-          <button className="secondary" onClick={() => onDetail(word)}>详情</button>
-          <button className="secondary" onClick={skip}>跳过</button>
         </div>
-        <WordBody word={word} loading={isLoadingCurrent} />
       </article>
     </section>
   );
