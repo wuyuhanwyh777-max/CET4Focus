@@ -10,6 +10,7 @@ const args = process.argv.slice(2);
 let limit = 100;
 let doAll = false;
 let provider = "all";
+let reportMissing = false;
 
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
@@ -18,6 +19,7 @@ for (let i = 0; i < args.length; i++) {
   else if (a === "--all") doAll = true;
   else if (a === "--provider" && args[i + 1]) { provider = args[i + 1]; i++; }
   else if (a.startsWith("--provider=")) { provider = a.split("=")[1]; }
+  else if (a === "--report-missing") reportMissing = true;
 }
 
 // Load word list
@@ -51,6 +53,14 @@ console.log(`Manual: ${manualKeys.size}, Generated: ${beforeCount}`);
 // Find missing words
 const missing = allArr.filter((w) => !manualKeys.has(w) && !generated[w]);
 console.log(`Missing: ${missing.length}`);
+
+// --report-missing: output missing word list and exit
+if (reportMissing) {
+  const outPath = resolve(ROOT, "data/missingExamples.txt");
+  writeFileSync(outPath, missing.join("\n"), "utf8");
+  console.log(`\nWritten ${missing.length} missing words to data/missingExamples.txt`);
+  process.exit(0);
+}
 
 const toProcess = doAll ? missing : missing.slice(0, limit);
 console.log(`Processing: ${toProcess.length} words (limit=${limit}, provider=${provider})\n`);
@@ -141,13 +151,41 @@ function loadTatoeba() {
   return tatoebaData;
 }
 
+// Generate safe word-form regex for Tatoeba matching
+function wordFormRegex(word) {
+  const lower = word.toLowerCase();
+  const esc = lower.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // For short words (<4 chars), only exact match
+  if (lower.length < 4) return new RegExp(`(?<![a-zA-Z])${esc}(?![a-zA-Z])`, "i");
+  // Common suffixes for longer words
+  const forms = [esc];
+  // Noun plurals
+  if (!lower.endsWith("s")) forms.push(esc + "s");
+  if (lower.endsWith("y")) forms.push(esc.slice(0, -1) + "ies");
+  if (lower.endsWith("f")) forms.push(esc.slice(0, -1) + "ves");
+  // Verb forms
+  forms.push(esc + "es", esc + "ed", esc + "ing");
+  if (lower.endsWith("e")) forms.push(esc.slice(0, -1) + "ing", esc.slice(0, -1) + "ed");
+  if (/[^aeiou][aeiou][^aeiou]$/.test(lower)) forms.push(esc + lower.slice(-1) + "ing", esc + lower.slice(-1) + "ed");
+  // Adjective forms
+  forms.push(esc + "er", esc + "est");
+  if (lower.endsWith("e")) forms.push(esc.slice(0, -1) + "er", esc.slice(0, -1) + "est");
+  // Noun forms
+  forms.push(esc + "ment", esc + "tion", esc + "ness", esc + "ity");
+  if (lower.endsWith("e")) forms.push(esc.slice(0, -1) + "ation");
+  if (lower.endsWith("t")) forms.push(esc + "ion");
+  // Adverb
+  forms.push(esc + "ly");
+  if (lower.endsWith("le")) forms.push(esc.slice(0, -2) + "ly");
+  // Remove duplicates
+  const unique = [...new Set(forms)];
+  return new RegExp(`(?<![a-zA-Z])(${unique.join("|")})(?![a-zA-Z])`, "i");
+}
+
 function fetchTatoeba(word) {
   const data = loadTatoeba();
   if (!data.length) return null;
-  const lower = word.toLowerCase();
-  // Strict word-boundary match
-  const escaped = lower.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const re = new RegExp(`(?<![a-zA-Z])${escaped}(?![a-zA-Z])`, "i");
+  const re = wordFormRegex(word);
   const candidates = data.filter((item) =>
     re.test(item.en) &&
     item.en.length >= 25 && item.en.length <= 140 &&
