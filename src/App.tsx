@@ -277,9 +277,16 @@ export function App() {
 
   function closeDetail() {
     const back = detailBack;
+    const savedY = getScrollPosition(`list:${back}`);
     setDetail(null);
     setPage(back);
-    window.setTimeout(() => window.scrollTo({ top: getScrollPosition(`list:${back}`), behavior: "auto" }), 60);
+    window.setTimeout(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: savedY, behavior: "auto" });
+        });
+      });
+    }, 80);
   }
 
   function startSingleReview(_word: NormalizedWord) {
@@ -807,9 +814,18 @@ function getLibraryWords(): NormalizedWord[] {
   return _cachedLight;
 }
 
-function useLazyGroups(groups: [string, NormalizedWord[]][], batchSize = 2) {
-  const [visible, setVisible] = useState(batchSize);
+let _libVisibleCount = 0;
+let _favVisibleCount = 0;
+
+function useLazyGroups(groups: [string, NormalizedWord[]][], batchSize = 2, cacheKey = "lib") {
+  const initial = cacheKey === "fav" ? Math.max(batchSize, _favVisibleCount) : Math.max(batchSize, _libVisibleCount);
+  const [visible, setVisible] = useState(initial);
   const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (cacheKey === "fav") _favVisibleCount = Math.max(_favVisibleCount, visible);
+    else _libVisibleCount = Math.max(_libVisibleCount, visible);
+  }, [visible, cacheKey]);
 
   useEffect(() => {
     setVisible(batchSize);
