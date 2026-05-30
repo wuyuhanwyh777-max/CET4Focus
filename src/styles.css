@@ -908,6 +908,25 @@ h2 {
 }
 .compact-card:hover { background: rgba(255,255,255,0.95); }
 .compact-card:active { background: rgba(37,99,235,0.06); }
+
+/* Inline alphabet bar */
+.alphabet-bar {
+  display: flex; gap: 4px; margin-top: 12px; overflow-x: auto;
+  padding-bottom: 4px; -webkit-overflow-scrolling: touch;
+}
+.alphabet-bar::-webkit-scrollbar { display: none; }
+.alpha-btn {
+  flex: 0 0 auto; min-width: 34px; height: 34px; padding: 0 6px;
+  border-radius: 10px; border: 0; cursor: pointer;
+  font-size: 14px; font-weight: 700; color: var(--muted);
+  background: rgba(255,255,255,0.7);
+  transition: background 0.15s, color 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.alpha-btn.active {
+  color: #fff; background: var(--blue);
+}
+.alpha-btn:active { transform: scale(0.95); }
 .compact-row {
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
 }

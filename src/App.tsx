@@ -888,9 +888,7 @@ function LibraryPage({ favorites, onToggle }: { favorites: Record<string, Normal
     [groups, activeLetter]
   );
   const { shown, remaining, sentinelRef } = useLazyGroups(displayGroups);
-  const letters = groups.map(([l]) => l);
-
-  const [pickerOpen, setPickerOpen] = useState(false);
+  const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   function openDetail(word: NormalizedWord) { setSelectedWord(normalizeWordData(word)); }
   function closeDetail() { setSelectedWord(null); }
@@ -904,16 +902,13 @@ function LibraryPage({ favorites, onToggle }: { favorites: Record<string, Normal
           <input placeholder="搜索单词..." value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
         <div className="segmented">{["全部", "高频词", "重点词", "未掌握", "已掌握", "收藏词"].map((item) => <button key={item} className={filter === item ? "active" : ""} onClick={() => setFilter(item)}>{item}</button>)}</div>
-        {letters.length > 1 && (
-          <div style={{display:"flex",alignItems:"center",gap:8,marginTop:10,flexWrap:"wrap"}}>
-            <button className="secondary" onClick={() => setPickerOpen(true)}>
-              {activeLetter === "ALL" ? "按字母筛选" : `当前：${activeLetter}`}
-            </button>
-            {activeLetter !== "ALL" && (
-              <button className="secondary" onClick={() => { setActiveLetter("ALL"); window.setTimeout(() => window.scrollTo({top:0,behavior:"auto"}),0); }}>显示全部</button>
-            )}
-          </div>
-        )}
+        {/* Inline alphabet bar */}
+        <div className="alphabet-bar">
+          <button className={`alpha-btn ${activeLetter === "ALL" ? "active" : ""}`} onClick={() => setActiveLetter("ALL")}>全部</button>
+          {allLetters.map((l) => (
+            <button key={l} className={`alpha-btn ${activeLetter === l ? "active" : ""}`} onClick={() => setActiveLetter(l)}>{l}</button>
+          ))}
+        </div>
       </div>
       <div className="lib-body" style={{marginTop:12}}>
         <div className="lib-groups">
@@ -932,12 +927,6 @@ function LibraryPage({ favorites, onToggle }: { favorites: Record<string, Normal
           {displayGroups.length === 0 && query && <div className="empty">没有匹配的单词</div>}
         </div>
       </div>
-      <AlphabetPicker
-        open={pickerOpen}
-        availableLetters={letters}
-        onSelect={(letter) => { setActiveLetter(letter); setPickerOpen(false); }}
-        onClose={() => setPickerOpen(false)}
-      />
       {selectedWord && (
         <LibraryDetailModal word={selectedWord} favorite={Boolean(favorites[selectedWord.word])} onToggle={onToggle} onClose={closeDetail} />
       )}
