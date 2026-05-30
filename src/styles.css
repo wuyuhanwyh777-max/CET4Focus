@@ -167,12 +167,12 @@ h2 {
 
 .hero-card {
   display: flex;
-  align-items: end;
+  align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  min-height: 220px;
-  margin-bottom: 20px;
-  padding: 30px;
+  gap: 20px;
+  min-height: 140px;
+  margin-bottom: 16px;
+  padding: 22px 26px;
   overflow: hidden;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.64)),
@@ -770,27 +770,32 @@ h2 {
 
 .segmented {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 18px;
-  padding: 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.62);
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin-bottom: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.segmented::-webkit-scrollbar { display: none; }
 
 .segmented button {
-  padding: 0 14px;
+  flex: 0 0 auto;
+  padding: 0 12px; min-height: 34px;
+  height: 34px; line-height: 34px;
   color: #6b7280;
-  background: transparent;
-  position: relative;
-  z-index: 1;
+  background: rgba(255,255,255,0.65);
+  border-radius: 10px;
+  font-size: 13px; font-weight: 650;
+  position: relative; z-index: 1;
+  transition: background 0.2s, color 0.2s;
 }
 
 .segmented button.active {
   color: var(--blue);
   background: #fff;
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
-  transition: color 0.3s var(--spring-fast), background 0.35s var(--spring-smooth), box-shadow 0.35s var(--spring-smooth);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
 
 .empty {
@@ -911,15 +916,15 @@ h2 {
 
 /* Inline alphabet bar */
 .alphabet-bar {
-  display: flex; gap: 4px; margin-top: 12px; overflow-x: auto;
-  padding-bottom: 4px; -webkit-overflow-scrolling: touch;
+  display: flex; gap: 3px; margin-top: 8px; overflow-x: auto;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
 .alphabet-bar::-webkit-scrollbar { display: none; }
 .alpha-btn {
-  flex: 0 0 auto; min-width: 34px; height: 34px; padding: 0 6px;
-  border-radius: 10px; border: 0; cursor: pointer;
-  font-size: 14px; font-weight: 700; color: var(--muted);
-  background: rgba(255,255,255,0.7);
+  flex: 0 0 auto; min-width: 28px; height: 30px; padding: 0 5px;
+  border-radius: 8px; border: 0; cursor: pointer;
+  font-size: 13px; font-weight: 700; color: var(--muted);
+  background: rgba(255,255,255,0.65);
   transition: background 0.15s, color 0.15s;
   display: flex; align-items: center; justify-content: center;
 }

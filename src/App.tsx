@@ -395,7 +395,7 @@ export function App() {
   );
 }
 
-function ProgressRing({ pct, size = 120 }: { pct: number; size?: number }) {
+function ProgressRing({ pct, size = 100 }: { pct: number; size?: number }) {
   const r = (size - 10) / 2; const circ = 2 * Math.PI * r;
   const dash = (pct / 100) * circ;
   return (
