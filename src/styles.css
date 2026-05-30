@@ -185,6 +185,19 @@ h2 {
   line-height: 1.75;
 }
 
+.hero-left { flex: 1; min-width: 0; }
+.hero-actions {
+  display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; align-items: center;
+}
+.hero-due-btn {
+  padding: 0 14px; min-height: 36px; height: 36px; font-size: 13px;
+  line-height: 36px;
+}
+.hero-start-btn {
+  min-height: 36px; height: 36px; min-width: 140px; font-size: 14px;
+  line-height: 36px;
+}
+
 .eyebrow,
 .muted {
   color: var(--muted);
@@ -1192,14 +1205,15 @@ h2 {
   }
 
   .hero-card {
-    display: block;
+    display: flex;
     min-height: auto;
-    padding: 24px;
+    padding: 20px;
+    flex-wrap: wrap;
   }
 
   .hero-card .primary {
-    width: 100%;
-    margin-top: 16px;
+    width: auto;
+    margin-top: 0;
   }
 
   .stats-grid {

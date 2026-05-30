@@ -419,17 +419,20 @@ function Dashboard(props: { today: string; goal: number; learnedToday: number; d
   return (
     <>
       <header className="hero-card">
-        <div>
+        <div className="hero-left">
           <p className="eyebrow">{formatFriendlyDate(props.today)}</p>
           <h1>CET-4 Focus</h1>
           <p>四级备考，轻一点开始。</p>
-          {props.dueCount > 0 && (
-            <button className="primary" style={{marginTop:14}} onClick={() => document.querySelector<HTMLButtonElement>('[data-nav="review"]')?.click()}>
-              你有 {props.dueCount} 个单词待复习 →
-            </button>
-          )}
+          <div className="hero-actions">
+            {props.dueCount > 0 && (
+              <button className="primary hero-due-btn" onClick={() => document.querySelector<HTMLButtonElement>('[data-nav="review"]')?.click()}>
+                待复习 {props.dueCount} 词 →
+              </button>
+            )}
+            <button className="primary large hero-start-btn" onClick={props.onStart}>开始今日学习</button>
+          </div>
         </div>
-        <ProgressRing pct={pct} />
+        <ProgressRing pct={pct} size={90} />
       </header>
       <section className="stats-grid">
         <Stat title="今日已学" value={`${props.learnedToday}`} unit={`/ ${props.goal} 词`} />
@@ -441,9 +444,6 @@ function Dashboard(props: { today: string; goal: number; learnedToday: number; d
         <h2>最近 7 天</h2>
         <div className="bars">{week.map((item) => <div key={item.date}><span style={{ height: `${Math.max(12, Math.round((item.count / maxCount) * 145))}px` }} /><small>{item.date.slice(5)}</small></div>)}</div>
       </section>
-      <div style={{textAlign:"center", marginTop:20}}>
-        <button className="primary large" onClick={props.onStart}>开始今日学习</button>
-      </div>
     </>
   );
 }
