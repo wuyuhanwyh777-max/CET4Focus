@@ -908,11 +908,6 @@ h2 {
 }
 .compact-card:hover { background: rgba(255,255,255,0.95); }
 .compact-card:active { background: rgba(37,99,235,0.06); }
-
-.lib-group {
-  content-visibility: auto;
-  contain-intrinsic-size: 200px;
-}
 .compact-row {
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
 }

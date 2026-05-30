@@ -848,21 +848,21 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
   const groups = useAlphabetGroups(filtered);
   const { shown, remaining, sentinelRef, setVisible } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const [pickerOpen, setPickerOpen] = useState(false);
-
-  function openAlphabetPicker() {
-    setPickerOpen(true);
-  }
 
   function scrollTo(letter: string) {
     const idx = groups.findIndex(([l]) => l === letter);
     if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
     setPickerOpen(false);
-    setTimeout(() => {
-      const el = document.getElementById(`lib-section-${letter}`);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 150);
+    // Use rAF to ensure DOM is updated after setVisible
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = sectionRefs.current[letter];
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
   }
 
   return (
@@ -878,8 +878,8 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
       <div className="lib-body">
         <div className="lib-groups">
           {shown.map(([letter, words]) => (
-            <div key={letter} id={`lib-section-${letter}`} className="lib-group">
-              <button type="button" className="lib-header" onClick={openAlphabetPicker} aria-label={`打开首字母选择器，当前分组 ${letter}`}>
+            <div key={letter} ref={(el) => { sectionRefs.current[letter] = el; }} className="lib-group">
+              <button type="button" className="lib-header" onClick={() => setPickerOpen(true)}>
                 <span className="lib-letter">{letter}</span><span>{words.length}词</span>
               </button>
               <div className="compact-grid">
@@ -918,20 +918,19 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
   const { shown, remaining, sentinelRef, setVisible } = useLazyGroups(groups);
   const letters = groups.map(([l]) => l);
 
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const [pickerOpen, setPickerOpen] = useState(false);
-
-  function openAlphabetPicker() {
-    setPickerOpen(true);
-  }
 
   function scrollTo(letter: string) {
     const idx = groups.findIndex(([l]) => l === letter);
     if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
     setPickerOpen(false);
-    setTimeout(() => {
-      const el = document.getElementById(`fav-section-${letter}`);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 150);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = sectionRefs.current[letter];
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
   }
 
   return (
@@ -947,8 +946,8 @@ function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: Normali
       <div className="lib-body">
         <div className="lib-groups">
           {shown.map(([letter, words]) => (
-            <div key={letter} id={`fav-section-${letter}`} className="lib-group">
-              <button type="button" className="lib-header" onClick={openAlphabetPicker} aria-label={`打开首字母选择器，当前分组 ${letter}`}>
+            <div key={letter} ref={(el) => { sectionRefs.current[letter] = el; }} className="lib-group">
+              <button type="button" className="lib-header" onClick={() => setPickerOpen(true)} aria-label={`打开首字母选择器，当前分组 ${letter}`}>
                 <span className="lib-letter">{letter}</span><span>{words.length}词</span>
               </button>
               <div className="compact-grid">
