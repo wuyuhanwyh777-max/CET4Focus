@@ -848,6 +848,8 @@ function useLazyGroups(groups: [string, NormalizedWord[]][], batchSize = 2, cach
   return { shown, remaining, sentinelRef, setVisible };
 }
 
+let _libActiveLetter = "ALL";
+
 function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<string, NormalizedWord>; onToggle: (word: NormalizedWord) => void; onDetail: (word: NormalizedWord) => void }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("全部");
@@ -861,61 +863,69 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
     if (filter === "收藏词") return Boolean(favorites[word.word]);
     return true;
   }), [allWords, query, filter, favorites]);
-  const groups = useAlphabetGroups(filtered);
-  const { shown, remaining, sentinelRef, setVisible } = useLazyGroups(groups);
-  const letters = groups.map(([l]) => l);
-  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  	const groups = useAlphabetGroups(filtered);
+	const [activeLetter, setActiveLetter] = useState(_libActiveLetter);
+	const displayGroups = useMemo(() =>
+	  activeLetter === "ALL" ? groups : groups.filter(([l]) => l === activeLetter),
+	  [groups, activeLetter]
+	);
+	const { shown, remaining, sentinelRef } = useLazyGroups(displayGroups);
+	const letters = groups.map(([l]) => l);
 
-  const [pickerOpen, setPickerOpen] = useState(false);
+	const [pickerOpen, setPickerOpen] = useState(false);
 
-  function scrollTo(letter: string) {
-    const idx = groups.findIndex(([l]) => l === letter);
-    if (idx >= 0 && idx >= shown.length) setVisible(idx + 1);
-    setPickerOpen(false);
-    // Use rAF to ensure DOM is updated after setVisible
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const el = sectionRefs.current[letter];
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-  }
+	function selectLetter(letter: string) {
+	  _libActiveLetter = letter;
+	  setActiveLetter(letter);
+	  setPickerOpen(false);
+	  window.setTimeout(() => window.scrollTo({ top: 0, behavior: "auto" }), 0);
+	}
 
-  return (
-    <section className="lib-page">
-      <div className="lib-top">
-        <h1>词库</h1>
-        <div className="lib-search">
-          <Search size={16} />
-          <input placeholder="搜索单词..." value={query} onChange={(e) => setQuery(e.target.value)} />
-        </div>
-        <div className="segmented">{["全部", "高频词", "重点词", "未掌握", "已掌握", "收藏词"].map((item) => <button key={item} className={filter === item ? "active" : ""} onClick={() => setFilter(item)}>{item}</button>)}</div>
-      </div>
-      <div className="lib-body">
-        <div className="lib-groups">
-          {shown.map(([letter, words]) => (
-            <div key={letter} ref={(el) => { sectionRefs.current[letter] = el; }} className="lib-group">
-              <button type="button" className="lib-header" onClick={() => setPickerOpen(true)}>
-                <span className="lib-letter">{letter}</span><span>{words.length}词</span>
-              </button>
-              <div className="compact-grid">
-                {words.map((word) => <CompactCard key={word.word} word={word} favorite={Boolean(favorites[word.word])} onToggle={onToggle} onDetail={onDetail} />)}
-              </div>
-            </div>
-          ))}
-          {remaining > 0 && <div ref={sentinelRef} className="lib-placeholder" />}
-          {groups.length === 0 && !query && <div className="empty">加载中...</div>}
-          {groups.length === 0 && query && <div className="empty">没有匹配的单词</div>}
-        </div>
-      </div>
-      <AlphabetPicker
-        open={pickerOpen}
-        availableLetters={letters}
-        onSelect={scrollTo}
-        onClose={() => setPickerOpen(false)}
-      />
-    </section>
-  );
+	return (
+	  <section className="lib-page">
+	    <div className="lib-top">
+	      <h1>词库</h1>
+	      <div className="lib-search">
+	        <Search size={16} />
+	        <input placeholder="搜索单词..." value={query} onChange={(e) => setQuery(e.target.value)} />
+	      </div>
+	      <div className="segmented">{["全部", "高频词", "重点词", "未掌握", "已掌握", "收藏词"].map((item) => <button key={item} className={filter === item ? "active" : ""} onClick={() => setFilter(item)}>{item}</button>)}</div>
+	      {letters.length > 1 && (
+	        <div style={{display:"flex",alignItems:"center",gap:8,marginTop:10,flexWrap:"wrap"}}>
+	          <button className="secondary" onClick={() => setPickerOpen(true)}>
+	            {activeLetter === "ALL" ? "按字母筛选" : `当前：${activeLetter}`}
+	          </button>
+	          {activeLetter !== "ALL" && (
+	            <button className="secondary" onClick={() => selectLetter("ALL")}>显示全部</button>
+	          )}
+	        </div>
+	      )}
+	    </div>
+	    <div className="lib-body" style={{marginTop:12}}>
+	      <div className="lib-groups">
+	        {shown.map(([letter, words]) => (
+	          <div key={letter} className="lib-group">
+	            <div className="lib-header">
+	              <span className="lib-letter">{letter}</span><span>{words.length}词</span>
+	            </div>
+	            <div className="compact-grid">
+	              {words.map((word) => <CompactCard key={word.word} word={word} favorite={Boolean(favorites[word.word])} onToggle={onToggle} onDetail={onDetail} />)}
+	            </div>
+	          </div>
+	        ))}
+	        {remaining > 0 && <div ref={sentinelRef} className="lib-placeholder" />}
+	        {displayGroups.length === 0 && !query && <div className="empty">加载中...</div>}
+	        {displayGroups.length === 0 && query && <div className="empty">没有匹配的单词</div>}
+	      </div>
+	    </div>
+	    <AlphabetPicker
+	      open={pickerOpen}
+	      availableLetters={letters}
+	      onSelect={selectLetter}
+	      onClose={() => setPickerOpen(false)}
+	    />
+	  </section>
+	);
 }
 
 function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: NormalizedWord[]; onToggle: (word: NormalizedWord) => void; onDetail: (word: NormalizedWord) => void; onReview: (word: NormalizedWord) => void }) {
