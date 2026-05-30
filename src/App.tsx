@@ -848,11 +848,30 @@ function useLazyGroups(groups: [string, NormalizedWord[]][], batchSize = 2, cach
   return { shown, remaining, sentinelRef, setVisible };
 }
 
-let _libActiveLetter = "ALL";
+function LibraryDetailModal({ word, favorite, onToggle, onClose }: { word: NormalizedWord; favorite: boolean; onToggle: (word: NormalizedWord) => void; onClose: () => void }) {
+  return createPortal(
+    <div className="review-overlay" onClick={onClose}>
+      <div className="review-sheet" onClick={(e) => e.stopPropagation()}>
+        <button className="review-close" onClick={onClose}>✕</button>
+        <h2>{word.word}</h2>
+        <Phonetics word={word} />
+        <WordBody word={word} />
+        <div className="button-row">
+          <button className={favorite ? "secondary" : "primary"} onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggle(word); }}>
+            {favorite ? "取消收藏" : "加入生词本"}
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body,
+  );
+}
 
-function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<string, NormalizedWord>; onToggle: (word: NormalizedWord) => void; onDetail: (word: NormalizedWord) => void }) {
+function LibraryPage({ favorites, onToggle }: { favorites: Record<string, NormalizedWord>; onToggle: (word: NormalizedWord) => void; onDetail?: (word: NormalizedWord) => void }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("全部");
+  const [activeLetter, setActiveLetter] = useState("ALL");
+  const [selectedWord, setSelectedWord] = useState<NormalizedWord | null>(null);
   const allWords = useMemo(() => getLibraryWords(), []);
   const filtered = useMemo(() => allWords.filter((word) => {
     if (query && !word.word.includes(query.toLowerCase()) && !word.meanings[0]?.definitionZh?.includes(query)) return false;
@@ -863,69 +882,67 @@ function LibraryPage({ favorites, onToggle, onDetail }: { favorites: Record<stri
     if (filter === "收藏词") return Boolean(favorites[word.word]);
     return true;
   }), [allWords, query, filter, favorites]);
-  	const groups = useAlphabetGroups(filtered);
-	const [activeLetter, setActiveLetter] = useState(_libActiveLetter);
-	const displayGroups = useMemo(() =>
-	  activeLetter === "ALL" ? groups : groups.filter(([l]) => l === activeLetter),
-	  [groups, activeLetter]
-	);
-	const { shown, remaining, sentinelRef } = useLazyGroups(displayGroups);
-	const letters = groups.map(([l]) => l);
+  const groups = useAlphabetGroups(filtered);
+  const displayGroups = useMemo(() =>
+    activeLetter === "ALL" ? groups : groups.filter(([l]) => l === activeLetter),
+    [groups, activeLetter]
+  );
+  const { shown, remaining, sentinelRef } = useLazyGroups(displayGroups);
+  const letters = groups.map(([l]) => l);
 
-	const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
-	function selectLetter(letter: string) {
-	  _libActiveLetter = letter;
-	  setActiveLetter(letter);
-	  setPickerOpen(false);
-	  window.setTimeout(() => window.scrollTo({ top: 0, behavior: "auto" }), 0);
-	}
+  function openDetail(word: NormalizedWord) { setSelectedWord(normalizeWordData(word)); }
+  function closeDetail() { setSelectedWord(null); }
 
-	return (
-	  <section className="lib-page">
-	    <div className="lib-top">
-	      <h1>词库</h1>
-	      <div className="lib-search">
-	        <Search size={16} />
-	        <input placeholder="搜索单词..." value={query} onChange={(e) => setQuery(e.target.value)} />
-	      </div>
-	      <div className="segmented">{["全部", "高频词", "重点词", "未掌握", "已掌握", "收藏词"].map((item) => <button key={item} className={filter === item ? "active" : ""} onClick={() => setFilter(item)}>{item}</button>)}</div>
-	      {letters.length > 1 && (
-	        <div style={{display:"flex",alignItems:"center",gap:8,marginTop:10,flexWrap:"wrap"}}>
-	          <button className="secondary" onClick={() => setPickerOpen(true)}>
-	            {activeLetter === "ALL" ? "按字母筛选" : `当前：${activeLetter}`}
-	          </button>
-	          {activeLetter !== "ALL" && (
-	            <button className="secondary" onClick={() => selectLetter("ALL")}>显示全部</button>
-	          )}
-	        </div>
-	      )}
-	    </div>
-	    <div className="lib-body" style={{marginTop:12}}>
-	      <div className="lib-groups">
-	        {shown.map(([letter, words]) => (
-	          <div key={letter} className="lib-group">
-	            <div className="lib-header">
-	              <span className="lib-letter">{letter}</span><span>{words.length}词</span>
-	            </div>
-	            <div className="compact-grid">
-	              {words.map((word) => <CompactCard key={word.word} word={word} favorite={Boolean(favorites[word.word])} onToggle={onToggle} onDetail={onDetail} />)}
-	            </div>
-	          </div>
-	        ))}
-	        {remaining > 0 && <div ref={sentinelRef} className="lib-placeholder" />}
-	        {displayGroups.length === 0 && !query && <div className="empty">加载中...</div>}
-	        {displayGroups.length === 0 && query && <div className="empty">没有匹配的单词</div>}
-	      </div>
-	    </div>
-	    <AlphabetPicker
-	      open={pickerOpen}
-	      availableLetters={letters}
-	      onSelect={selectLetter}
-	      onClose={() => setPickerOpen(false)}
-	    />
-	  </section>
-	);
+  return (
+    <section className="lib-page">
+      <div className="lib-top">
+        <h1>词库</h1>
+        <div className="lib-search">
+          <Search size={16} />
+          <input placeholder="搜索单词..." value={query} onChange={(e) => setQuery(e.target.value)} />
+        </div>
+        <div className="segmented">{["全部", "高频词", "重点词", "未掌握", "已掌握", "收藏词"].map((item) => <button key={item} className={filter === item ? "active" : ""} onClick={() => setFilter(item)}>{item}</button>)}</div>
+        {letters.length > 1 && (
+          <div style={{display:"flex",alignItems:"center",gap:8,marginTop:10,flexWrap:"wrap"}}>
+            <button className="secondary" onClick={() => setPickerOpen(true)}>
+              {activeLetter === "ALL" ? "按字母筛选" : `当前：${activeLetter}`}
+            </button>
+            {activeLetter !== "ALL" && (
+              <button className="secondary" onClick={() => { setActiveLetter("ALL"); window.setTimeout(() => window.scrollTo({top:0,behavior:"auto"}),0); }}>显示全部</button>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="lib-body" style={{marginTop:12}}>
+        <div className="lib-groups">
+          {shown.map(([letter, words]) => (
+            <div key={letter} className="lib-group">
+              <div className="lib-header">
+                <span className="lib-letter">{letter}</span><span>{words.length}词</span>
+              </div>
+              <div className="compact-grid">
+                {words.map((word) => <CompactCard key={word.word} word={word} favorite={Boolean(favorites[word.word])} onToggle={onToggle} onDetail={openDetail} />)}
+              </div>
+            </div>
+          ))}
+          {remaining > 0 && <div ref={sentinelRef} className="lib-placeholder" />}
+          {displayGroups.length === 0 && !query && <div className="empty">加载中...</div>}
+          {displayGroups.length === 0 && query && <div className="empty">没有匹配的单词</div>}
+        </div>
+      </div>
+      <AlphabetPicker
+        open={pickerOpen}
+        availableLetters={letters}
+        onSelect={(letter) => { setActiveLetter(letter); setPickerOpen(false); }}
+        onClose={() => setPickerOpen(false)}
+      />
+      {selectedWord && (
+        <LibraryDetailModal word={selectedWord} favorite={Boolean(favorites[selectedWord.word])} onToggle={onToggle} onClose={closeDetail} />
+      )}
+    </section>
+  );
 }
 
 function FavoritesPage({ words, onToggle, onDetail, onReview }: { words: NormalizedWord[]; onToggle: (word: NormalizedWord) => void; onDetail: (word: NormalizedWord) => void; onReview: (word: NormalizedWord) => void }) {
