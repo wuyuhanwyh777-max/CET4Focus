@@ -889,6 +889,8 @@ function LibraryPage({ favorites, onToggle }: { favorites: Record<string, Normal
   );
   const { shown, remaining, sentinelRef } = useLazyGroups(displayGroups);
   const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const letters = groups.map(([l]) => l);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   function openDetail(word: NormalizedWord) { setSelectedWord(normalizeWordData(word)); }
   function closeDetail() { setSelectedWord(null); }
@@ -902,7 +904,6 @@ function LibraryPage({ favorites, onToggle }: { favorites: Record<string, Normal
           <input placeholder="搜索单词..." value={query} onChange={(e) => setQuery(e.target.value)} />
         </div>
         <div className="segmented">{["全部", "高频词", "重点词", "未掌握", "已掌握", "收藏词"].map((item) => <button key={item} className={filter === item ? "active" : ""} onClick={() => setFilter(item)}>{item}</button>)}</div>
-        {/* Inline alphabet bar */}
         <div className="alphabet-bar">
           <button className={`alpha-btn ${activeLetter === "ALL" ? "active" : ""}`} onClick={() => setActiveLetter("ALL")}>全部</button>
           {allLetters.map((l) => (
@@ -914,9 +915,9 @@ function LibraryPage({ favorites, onToggle }: { favorites: Record<string, Normal
         <div className="lib-groups">
           {shown.map(([letter, words]) => (
             <div key={letter} className="lib-group">
-              <div className="lib-header">
+              <button type="button" className="lib-header" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setPickerOpen(true); }}>
                 <span className="lib-letter">{letter}</span><span>{words.length}词</span>
-              </div>
+              </button>
               <div className="compact-grid">
                 {words.map((word) => <CompactCard key={word.word} word={word} favorite={Boolean(favorites[word.word])} onToggle={onToggle} onDetail={openDetail} />)}
               </div>
@@ -927,6 +928,12 @@ function LibraryPage({ favorites, onToggle }: { favorites: Record<string, Normal
           {displayGroups.length === 0 && query && <div className="empty">没有匹配的单词</div>}
         </div>
       </div>
+      <AlphabetPicker
+        open={pickerOpen}
+        availableLetters={letters}
+        onSelect={(letter) => { setActiveLetter(letter); setPickerOpen(false); }}
+        onClose={() => setPickerOpen(false)}
+      />
       {selectedWord && (
         <LibraryDetailModal word={selectedWord} favorite={Boolean(favorites[selectedWord.word])} onToggle={onToggle} onClose={closeDetail} />
       )}
