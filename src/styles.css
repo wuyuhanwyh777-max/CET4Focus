@@ -902,14 +902,16 @@ h2 {
 }
 .compact-card {
   position: relative; padding: 12px 14px; cursor: pointer;
-  border-radius: 16px; background: rgba(255,255,255,0.7);
-  border: 1px solid rgba(255,255,255,0.5);
-  transition: transform 0.25s var(--spring-smooth), box-shadow 0.25s var(--spring-fast);
-  animation: cardIn 0.4s var(--spring-smooth) both;
+  border-radius: 16px; background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(255,255,255,0.6);
+  transition: background 0.15s ease;
 }
-.compact-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+.compact-card:hover { background: rgba(255,255,255,0.95); }
+.compact-card:active { background: rgba(37,99,235,0.06); }
+
+.lib-group {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
 }
 .compact-row {
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
@@ -1286,6 +1288,11 @@ h2 {
   .button-row {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .study-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
 }
